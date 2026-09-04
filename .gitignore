@@ -14,6 +14,14 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 *.log
+# Configurações do VSCode
+.vscode/
+*.sln
+*.csproj
+
+# Builds e temporários da Unity que podem ter ficado de fora
+/[Log]/
+/[Logs]/
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
