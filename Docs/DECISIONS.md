@@ -21,3 +21,10 @@
 - Nomes de exibição dos 7 upgrades (metáfora de computação): Daemon (torreta), Buffer
   Circular (lâminas), Fork (leque), Overclock (velocidade), Payload (dano), Redundância
   (regeneração), Cache (raio de coleta).
+
+- Tanque (memory leak) ganha dano de contato crescente com o tempo vivo, até um teto —
+  reforça o reskin sem mexer em HP/velocidade nem criar campo novo na base.
+- Boss (stack overflow) usa ciclo de 4 fases (aproxima/telegraph/overflow/cooldown) com
+  UnityEvents OnTelegraphStart/OnOverflowFire pra desacoplar VFX/Animator da lógica de IA.
+- Confirmado (não é decisão nova, é registro): Rusher e Tanque usam PickNearestTarget()
+  padrão da base sem override; só o Atirador tem regra de alvo própria.
