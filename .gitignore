@@ -18,6 +18,9 @@
 .vscode/
 *.sln
 *.csproj
+# Forçando a exclusão para leitura limpa da IA
+/ProjectSettings/
+/Packages/
 
 # Builds e temporários da Unity que podem ter ficado de fora
 /[Log]/
