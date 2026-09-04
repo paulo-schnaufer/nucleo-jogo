@@ -12,3 +12,10 @@
 - Pausa do jogo (upgrade/game over) via `Time.timeScale = 0`, sem flags de pausa manuais espalhadas — física e corrotinas já respeitam isso.
 - `ObjectPool` chaveado pelo prefab de origem (não string/tag), via componente auxiliar `PoolItem` adicionado automaticamente — evita bug de digitação de chave.
 - Referências de alvo (`EnemyBase.PlayerTarget`/`CoreTarget`) como campos estáticos simples em vez de service locator — simplificação aceita pro escopo de 1 mapa/1 jogador/1 Núcleo do protótipo.
+
+- SCOPE_LOCK.md não tem seções "MVP"/"expandido" — a lista de 7 upgrades da seção
+  "### Escopo" é a única fonte de verdade sobre o pool de upgrades; corrente
+  elétrica segue de fora até virar stretch goal formalmente aprovado.
+- Nomenclatura fixada dos 7 upgrades (código ↔ nome em tela): DaemonTurret→"Daemon",
+  RoundRobinBlades→"Round-Robin", ForkShot→"Fork()", Overclock→"Overclock",
+  CriticalExploit→"Exploit Crítico", Redundancy→"Redundância", Cache→"Cache".

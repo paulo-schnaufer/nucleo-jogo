@@ -1,32 +1,41 @@
-### Sessão — Arquitetura do Core Prototype (2026-09-04 - 02:50)
+### Sessão — Sistema de Upgrades (2026-09-04 - 05:20)
 
 **O que foi feito nesta sessão:**
-Leitura de STATUS.md, SCOPE_LOCK.md, DECISIONS.md (vazio) e STYLE_GUIDE.md. Arquitetura
-completa do core loop em C#/Unity 6.6, pooling desde o início: `ObjectPool`+`PoolItem`,
-`Health` genérico (jogador/inimigo/Núcleo), `CoreIntegrity`, `PlayerStats`,
-`PlayerController` (2D top-down), `EnemyBase` (perseguição+contato, extensível pros
-tipos), `XPOrb`, `PlayerProgression` (XP/nível, trata level-up múltiplo no mesmo frame),
-`UpgradeData`+`UpgradeManager` (pausa+escolha), `AutoTurretWeapon` (arma automática
-funcional) + `Projectile` (pooled), `EnemySpawner` (3 ondas — MVP, ver SCOPE_LOCK.md),
-`GameManager` (derrota/vitória). 15 scripts comentados em pt-BR, entregues como arquivos
-prontos pra colar em `Assets/Scripts`.
+- Confirmado (com cache-bust) que SCOPE_LOCK.md real não tem seções "## Escopo (MVP)"
+  / "## Escopo expandido" — tem uma única seção "### Escopo" listando 7 upgrades
+  (3 armas + 4 passivas), com corrente elétrica já marcada como stretch goal à parte.
+  Projeto do sistema seguiu essa versão real do arquivo.
+- Criado Assets/Scripts/Upgrades/ completo: UpgradeDefinition (ScriptableObject) +
+  UpgradeLevelData, UpgradeManager (sorteio de N opções sem repetir upgrade no
+  nível máximo + aplicação de arma/passiva), PlayerStats (stub), e os 7 upgrades:
+  DaemonTurret (torreta), RoundRobinBlades + BladeHit (lâminas orbitais), ForkShot
+  (tiro em leque), e os 4 hooks de passiva (Overclock/CriticalExploit/Redundancy/Cache)
+  aplicados via PlayerStats.
+- Nomes com metáfora de computação aplicados aos 7 (Daemon, Round-Robin, Fork(),
+  Overclock, Exploit Crítico, Redundância, Cache).
 
 **O que ficou pendente/quebrado:**
-- Só o comportamento "rusher" está em `EnemyBase`; atirador (DDoS) ainda não tem
-  subclasse — é a próxima prioridade (tanque/boss são escopo expandido, não agora).
-- UI de escolha de upgrade (3 cards) e HUD (vida jogador/Núcleo, XP) não existem —
-  `UpgradeManager` e `Health` já expõem os eventos que essa UI vai consumir.
-- Nenhum GameObject/prefab estava criado no Editor no momento em que esta entrada foi
-  escrita.
-
-**Validação manual (04/09, pós-integração dos scripts):**
-Scripts colados, prefabs criados, loop testado no Editor com 1 inimigo rusher + torreta
-automática — spawn, dano e pooling funcionando numa cena de teste.
+- Integração com o runtime oficial concluída para as armas novas: Daemon, Fork() e
+  Round-Robin agora usam os contratos reais de Projectile, EnemyBase e ObjectPool;
+  a mira usa SyncTransforms e a PhysicsScene2D da cena da arma.
+- O sistema alternativo em Nucleo.Upgrades.Core permanece fora do runtime oficial;
+  o jogo continua usando Nucleo.UpgradeManager, Nucleo.UpgradeData e Nucleo.PlayerStats.
+- Nenhuma UI de level-up foi criada (fora do escopo pedido nesta sessão) — o
+  UpgradeManager expõe eventos (OnOptionsRolled, OnUpgradeApplied,
+  OnNoUpgradesAvailable) prontos pra uma tela consumir.
+- O PlayerStats.cs em Nucleo.Upgrades é um stub legado e permanece fora do runtime;
+  o jogador usa Nucleo.PlayerStats, que já concentra os quatro bônus passivos.
+- As APIs reais foram confirmadas e integradas: ObjectPool.Instance.Get(prefab,pos,rot),
+  Projectile.Launch(direction,speed,damage,owner) e EnemyBase.ApplyDamage(amount,source).
+- Nenhum asset (ScriptableObject de fato, ícones, prefabs de projétil/lâmina) foi
+  criado dentro da Unity ainda — só o código.
+- Valores de balanceamento (cadência, dano, %s) não foram fixados em código —
+  ficam no Inspector de cada UpgradeDefinition; nenhum default numérico foi commitado.
 
 **Próxima tarefa exata para a próxima sessão:**
-1. Implementar a subclasse de `EnemyBase` para o atirador (DDoS) — mira o Núcleo por
-   padrão (ver DECISIONS.md).
-2. Construir a UI de escolha de upgrade (consumindo `UpgradeManager.OnChoicesReady` /
-   `ConfirmChoice`) usando só o pool de 3 upgrades do MVP definido em `SCOPE_LOCK.md`:
-   lâminas orbitais, velocidade, dano.
-3. Construir a UI de HUD (consumindo `Health.OnHealthChanged`) para jogador e Núcleo.
+- Criar os 7 assets UpgradeDefinition no Editor (Assets/Data/Upgrades/), preencher
+  níveis com valores de teste, criar a UpgradeManager na cena com os 7 arrastados,
+  criar prefabs mínimos de projétil/lâmina compatíveis com as assunções acima (ou
+  ajustar os scripts pros nomes reais), e então construir a tela de level-up
+  (pausa via Time.timeScale = 0, já decidido) que chama RollOptions/ApplyUpgrade.
+  

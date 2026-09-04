@@ -733,7 +733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58047c0d7bf7f6a478b8e434caac175a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PlayerProgression
-  baseXPToLevel: 5
+  baseXPToLevel: 2
   xpCurveMultiplier: 1.35
 --- !u!114 &1871748935
 MonoBehaviour:
@@ -955,8 +955,20 @@ MonoBehaviour:
     entries:
     - enemyPrefab: {fileID: 4383245081477580900, guid: 8632ea2b9890aee4bbc00414b8e12304, type: 3}
       count: 4
-    spawnInterval: 1
-    delayBeforeWave: 1
+    spawnInterval: 2
+    delayBeforeWave: 2
+  - waveName: 1
+    entries:
+    - enemyPrefab: {fileID: 4383245081477580900, guid: 8632ea2b9890aee4bbc00414b8e12304, type: 3}
+      count: 6
+    spawnInterval: 3
+    delayBeforeWave: 3
+  - waveName: 1
+    entries:
+    - enemyPrefab: {fileID: 4383245081477580900, guid: 8632ea2b9890aee4bbc00414b8e12304, type: 3}
+      count: 8
+    spawnInterval: 3
+    delayBeforeWave: 5
   spawnPoints:
   - {fileID: 102851987}
   - {fileID: 1423826947}
@@ -1004,7 +1016,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1495386438754325686, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
       propertyPath: fireRate
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6562383802996083937, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
       propertyPath: m_Name
