@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88203341b113f9e40addb74ceffeef37, type: 3}
   m_Name: Upgrade_RaioColeta
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
-  displayName: Raio de Coleta
+  displayName: Cache
   description: 
   icon: {fileID: 0}
   category: 1
   weaponPrefab: {fileID: 0}
   passiveType: 3
-  passiveAmountPerPick: 0.5
+  passiveAmountPerPick: 0.3
   oneTimeOnly: 0

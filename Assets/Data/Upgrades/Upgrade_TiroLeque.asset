@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88203341b113f9e40addb74ceffeef37, type: 3}
   m_Name: Upgrade_TiroLeque
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
-  displayName: Tiro em Leque
+  displayName: Fork
   description: 
   icon: {fileID: 0}
   category: 0
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 2862889451173527468, guid: 7d0d4b628a2746a4491a5b63e5697b5b, type: 3}
   passiveType: 0
   passiveAmountPerPick: 1
   oneTimeOnly: 1

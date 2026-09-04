@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88203341b113f9e40addb74ceffeef37, type: 3}
   m_Name: Upgrade_Torreta
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
-  displayName: "Torreta Autom\xE1tica"
+  displayName: Daemon
   description: 
   icon: {fileID: 0}
   category: 0

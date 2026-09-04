@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88203341b113f9e40addb74ceffeef37, type: 3}
   m_Name: Upgrade_Regeneracao
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
-  displayName: "Regenera\xE7\xE3o"
+  displayName: "Redund\xE2ncia"
   description: 
   icon: {fileID: 0}
   category: 1
