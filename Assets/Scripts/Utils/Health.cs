@@ -10,6 +10,7 @@ namespace Nucleo
     /// STYLE_GUIDE.md). Não sabe nada sobre quem é o dono — só gerencia HP
     /// e dispara eventos; cada dono decide o que fazer com a morte.
     /// </summary>
+    [RequireComponent(typeof(DamageFlash))]
     public class Health : MonoBehaviour
     {
         [SerializeField] private float maxHP = 100f;
@@ -24,10 +25,31 @@ namespace Nucleo
         public event Action<float, GameObject> OnDamaged;
         public event Action OnDeath;
 
+        public static event Action<Health, float, GameObject> AnyDamaged;
+        public static event Action<Health> AnyDeath;
+
         private void Awake()
         {
+            if (GetComponent<DamageFlash>() == null)
+                gameObject.AddComponent<DamageFlash>();
+
             CurrentHP = maxHP;
             IsDead = false;
+        }
+
+        private void OnDamagedFlash(float amount, GameObject source)
+        {
+            GetComponent<DamageFlash>()?.Flash();
+        }
+
+        private void OnEnable()
+        {
+            OnDamaged += OnDamagedFlash;
+        }
+
+        private void OnDisable()
+        {
+            OnDamaged -= OnDamagedFlash;
         }
 
         /// <summary>
@@ -55,12 +77,14 @@ namespace Nucleo
 
             CurrentHP = Mathf.Max(0f, CurrentHP - amount);
             OnDamaged?.Invoke(amount, source);
+            AnyDamaged?.Invoke(this, amount, source);
             OnHealthChanged?.Invoke(CurrentHP, maxHP);
 
             if (CurrentHP <= 0f)
             {
                 IsDead = true;
                 OnDeath?.Invoke();
+                AnyDeath?.Invoke(this);
             }
         }
 

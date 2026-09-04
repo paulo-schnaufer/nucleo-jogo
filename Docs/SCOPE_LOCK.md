@@ -29,3 +29,4 @@
 - Variação adaptativa do spawnInterval conforme a velocidade com que o jogador limpou a
   onda anterior — mesma régua da corrente elétrica: só depois do boss estar testado.
 - "Abaixo de X% de Integridade do Núcleo, todo inimigo muda de prioridade". CoreIntegrity.IsCritical/OnCriticalEntered só existe pra disparar telegraph visual (âmbar), não influencia a IA.
+- Linhas de callout de início de onda anunciando o tipo de inimigo predominante daquela onda (ex: "Onda 2 — tráfego anômalo detectado"). Custo estimado: texto puro, ~30min, reaproveitando evento de início de onda já necessário para outras coisas.

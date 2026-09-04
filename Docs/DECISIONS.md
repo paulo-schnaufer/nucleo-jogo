@@ -31,3 +31,16 @@
 
 - Autor `aura-design-assets` (OpenGameArt) excluído **categoricamente** do projeto — todos os 3 packs dele (não só o já sinalizado), por: arquivos atualmente indisponíveis por suspeita de licenciamento na própria plataforma, histórico de disclosure de IA incompleta corrigida só sob cobrança do moderador, e um dos 3 packs com campo de licença formal (CC-BY 3.0/4.0) inconsistente com o texto do corpo (CC0). Ícones de upgrade saem do "Generic Items" da Kenney (retint manual pra paleta).
 - Regra geral de arte adicionada: nenhum ícone com cruz vermelha em fundo branco (símbolo protegido por tratado internacional, independente de licença de copyright/CC0) — vale pro Generic Items e pra qualquer asset futuro.
+
+- Limiar de vitória: Variante A do texto de vitória dispara com Integridade do Núcleo ≥50% ao fim da onda 6; Variante B dispara com <50%.
+- Limiares de status de integridade fixados em 75/50/25/10%, disparo único por limiar (sem repetição).
+
+- Juice de combate usa coroutines nativas, sem DOTween; hit-stop respeita a pausa de
+  upgrade/game over e não dispara em hit não-letal de inimigo comum.
+- Screen shake usa o máximo entre eventos simultâneos, nunca soma amplitudes.
+- Damage numbers ficam restritos ao boss até o HP dos inimigos comuns ser confirmado.
+
+- Estrutura do Audio Mixer travada em 2 grupos filhos de Master: `Music` e `SFX` (sem subgrupos por tipo de inimigo — o pitch aleatório é o único diferenciador entre os 4).
+- Limiter implementado via efeito nativo `Compressor` no grupo `Master` (Unity não tem nó "Limiter" dedicado); parâmetros iniciais: Threshold -10dB / Attack 10ms / Release 150ms / Make Up Gain 0–3dB, a reajustar de ouvido com os clipes finais.
+- Reprodução do hit via pool fixo de `AudioSource`s com `Play()` (não `PlayOneShot()`), pelo motivo técnico documentado no script: `AudioSource.pitch` afeta todas as reproduções em andamento na mesma fonte, então pitch por instância exige fonte dedicada por instância concorrente.
+- `AudioManager` como singleton estático com `DontDestroyOnLoad`, mesmo padrão de simplificação já aceito em DECISIONS.md pra referências estáticas.

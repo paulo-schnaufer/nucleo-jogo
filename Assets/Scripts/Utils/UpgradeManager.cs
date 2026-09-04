@@ -72,6 +72,7 @@ namespace Nucleo
             int choiceCount = Mathf.Min(3, pool.Count);
             var choices = pool.OrderBy(_ => Random.value).Take(choiceCount).ToList();
 
+            HitStop.NotifyExternalPause();
             Time.timeScale = 0f;
             OnChoicesReady?.Invoke(choices);
         }
@@ -88,7 +89,10 @@ namespace Nucleo
             if (_pendingChoices > 0)
                 OpenNextChoice(); // ainda há level-up pendente: mostra o próximo painel, mantém pausado
             else
+            {
+                HitStop.NotifyExternalResume();
                 Time.timeScale = 1f;
+            }
         }
 
         private void ApplyUpgrade(UpgradeData upgrade)
