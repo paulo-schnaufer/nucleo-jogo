@@ -28,3 +28,6 @@
   UnityEvents OnTelegraphStart/OnOverflowFire pra desacoplar VFX/Animator da lógica de IA.
 - Confirmado (não é decisão nova, é registro): Rusher e Tanque usam PickNearestTarget()
   padrão da base sem override; só o Atirador tem regra de alvo própria.
+
+- Autor `aura-design-assets` (OpenGameArt) excluído **categoricamente** do projeto — todos os 3 packs dele (não só o já sinalizado), por: arquivos atualmente indisponíveis por suspeita de licenciamento na própria plataforma, histórico de disclosure de IA incompleta corrigida só sob cobrança do moderador, e um dos 3 packs com campo de licença formal (CC-BY 3.0/4.0) inconsistente com o texto do corpo (CC0). Ícones de upgrade saem do "Generic Items" da Kenney (retint manual pra paleta).
+- Regra geral de arte adicionada: nenhum ícone com cruz vermelha em fundo branco (símbolo protegido por tratado internacional, independente de licença de copyright/CC0) — vale pro Generic Items e pra qualquer asset futuro.

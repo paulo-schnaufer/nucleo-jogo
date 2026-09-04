@@ -1,16 +1,13 @@
-## Tabela
-
-| Nome | Fonte / Link | Licença exata (declarada na página) | Exige atribuição? | Compatibilidade / Observação |
-|---|---|---|---|---|
-| UI Pack - Sci-Fi (130+ sprites) | https://opengameart.org/content/ui-pack-scifi (espelho de kenney.nl/assets/ui-pack-space-expansion) | CC0 | Não ("this is not mandatory") | Flat/vetorial sem contorno — bate com regra §3. Painéis/botões precisam retint pra paleta (não vêm em ciano/magenta). |
-| UI Pack (430+ sprites) | https://opengameart.org/content/ui-pack | CC0 | Não | Base genérica de botão/slider/painel pra completar o Sci-Fi Pack. Mesma ressalva de retint. |
-| Particle Pack (80+ sprites) | https://opengameart.org/content/particle-pack-80-sprites | CC0 | Não (mas apreciado) | Inclui sprite radial neutro (fire/smoke/spark/electric) — serve como a "textura única" da regra §5 do VFX. Cor vem do Start Color, não da textura: uso direto. |
-| Smoke particle assets (77 sprites) | https://opengameart.org/content/smoke-particle-assets | CC0 | Não | Bom pra morte de tanque/boss e hit burst. Confirmar se algum sprite tem contorno pixelado antes de importar (exceção controlada §3 se sim). |
-| Crosshair pack (200×) | https://opengameart.org/node/84345 | CC0 | Não (mas apreciado) | Fora do escopo atual (não há mira/crosshair no SCOPE_LOCK) — catalogado como opcional, **não implementar sem necessidade real**. |
-| Game icons (105 ícones, P&B 1x/2x) | https://opengameart.org/content/game-icons | CC0 | Não | Genéricos (settings, exit, lock, warning...) — úteis pro menu de pausa/HUD funcional, não pros 7 ícones de upgrade em si. |
-| Generic Items (160 ícones: tools/mechanical/tech) | https://opengameart.org/node/64179 | CC0 | Não | Melhor candidato Kenney pros 7 ícones de upgrade (metáfora de computação) — vem colorido, cada ícone precisa de retint manual pro hex exato antes de virar ícone 64×64. |
-| Cyber Inventory Mega Pack — 158 ícones (4 estilos neon) | https://opengameart.org/comment/111808 (autor: aura-design-assets) | CC0 (declarado no corpo da página, consistente com o campo de metadado) | Não | ⚠️ Base gerada por IA (disclosure na própria página) depois retrabalhada manualmente pelo autor. Estilos "Cyber Core (Blue)" e "Neon Pulse (Pink)" visualmente próximos de CIANO/MAGENTA — **checar regra do concurso sobre arte assistida por IA antes de usar.** 1024px, redimensiona bem pra 64px. |
-| Cyberpunk Tactical UI Icons — Ultimate Library (sampler, 24 ícones) | https://opengameart.org/content/cyberpunk-tactical-ui-icons-%E2%80%94-ultimate-library-free-sampler (autor: aura-design-assets) | CC0 | Não | Mesma ressalva de IA do pack acima. Estética "tactical laranja + azul neon", menos aderente à paleta que o pack de 158. |
-| ~~Cyberpunk UI & Inventory Icons (8 ícones) — Sci-Fi HUD Set~~ | https://opengameart.org/node/185145 (autor: aura-design-assets) | **INCONSISTENTE**: campo "License(s)" da página = CC-BY 3.0 / CC-BY 4.0; texto do corpo = CC0 | Indefinido (depende de qual licença vale) | **NÃO USAR** até reconciliar a divergência direto com o autor ou na fonte itch.io. Descartado da lista de uso por segurança jurídica. |
-
-**Não priorizados** (fora do escopo desta busca, mas achados na varredura): "Free Pixel Effects Pack" (CodeManu, CC0, opengameart.org/node/85611) — é pixel-art com contorno próprio, só entraria pela exceção controlada da §3 do STYLE_GUIDE, e só se faltar tempo pra achar equivalente flat.
+| Asset | 1. Licença exata na página | 2. Menciona concurso/comercial? | 3. Exige atribuição? | 4. Share-alike/GPL? | 5. Risco de a página sumir/mudar | Veredito |
+|---|---|---|---|---|---|---|
+| UI Pack - Sci-Fi (130+) | CC0 confirmado (Kenney) | Silêncio, mas CC0 = domínio público, cobre comercial sem ambiguidade | Não (apreciada) | Não | Baixo (Kenney é estável) | ✅ Usar — **corrigir URL p/ `ui-pack-sci-fi`** |
+| UI Pack (430+) | CC0 confirmado (Kenney) | idem | Não | Não | Baixo | ✅ Usar |
+| Particle Pack (80+) | CC0 confirmado (Kenney) | idem | Não | Não | Baixo | ✅ Usar |
+| Smoke particle assets (77) | CC0 confirmado (Kenney) | idem | Não | Não | Baixo | ✅ Usar |
+| Crosshair pack (200×) | CC0 confirmado (Kenney) | idem | Não | Não | Baixo | Catalogado, **fora de escopo agora** (SCOPE_LOCK não tem mira) — não implementar |
+| Game icons (105) | CC0 confirmado (Kenney) | idem | Não | Não | Baixo | ✅ Usar (menu/HUD) |
+| Generic Items (160) | CC0 confirmado (Kenney) | idem | Não | Não | Baixo | ✅ Usar — **checar cruz azul, não vermelha** (símbolo protegido, não é questão de licença) |
+| Free Pixel Effects Pack (CodeManu) | CC0 confirmado na página certa | Texto do corpo diz explicitamente "personal and comercial purposes" | Não | Não | Baixo | Catalogado como fallback §3, **corrigir URL p/ `node/86556`** |
+| Cyber Inventory Mega Pack (158, aura-design-assets) | CC0 declarado, mas **arquivo indisponível por suspeita de licenciamento agora** | N/A — irrelevante, arquivo não baixa | N/A | N/A | **Altíssimo — página já mudou de estado durante esta sessão** | ❌ **Excluir** |
+| Cyberpunk Tactical UI Icons sampler (24, aura-design-assets) | idem acima | N/A | N/A | N/A | **Altíssimo** | ❌ **Excluir** |
+| Cyberpunk UI & Inventory (8, aura-design-assets) | Campo formal = CC-BY 3.0/4.0 vs. corpo = CC0 (inconsistência real, confirmada) + **também indisponível agora** | N/A | Indefinido | Indefinido | **Altíssimo** | ❌ Já estava excluído — confirmado correto, com motivo dobrado |
