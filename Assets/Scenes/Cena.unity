@@ -733,7 +733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58047c0d7bf7f6a478b8e434caac175a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PlayerProgression
-  baseXPToLevel: 2
+  baseXPToLevel: 20
   xpCurveMultiplier: 1.35
 --- !u!114 &1871748935
 MonoBehaviour:
