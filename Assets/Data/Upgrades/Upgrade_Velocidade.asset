@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Upgrade_Velocidade
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
   displayName: Overclock
-  description: 
-  icon: {fileID: 0}
+  description: "Ignora o gerenciamento t\xE9rmico do hardware do chassi, sacrificando estabilidade por pura agilidade evasiva."
+  icon: {fileID: 7688491598028605165, guid: f2ed4e47833774243bf13bfa6a2d90b6, type: 3}
   category: 1
   weaponPrefab: {fileID: 0}
   passiveType: 0

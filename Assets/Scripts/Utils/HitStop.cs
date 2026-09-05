@@ -13,6 +13,7 @@ namespace Nucleo
 
         public static void Trigger(MonoBehaviour runner, float milliseconds, bool bypassDebounce = false)
         {
+            if (GameManager.Instance != null && GameManager.Instance.CurrentState != GameManager.GameState.Playing) return;
             if (runner == null || _externalPause ||
                 (!bypassDebounce && Time.unscaledTime - _lastTrigger < DebounceSeconds))
                 return;

@@ -56,17 +56,25 @@ namespace Nucleo
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
             Transform nearest = null;
             float nearestSqrDist = float.MaxValue;
+            float maxSqrRange = range * range; // Limite matemático rígido base do raio
 
             foreach (var hit in hits)
             {
-                var health = hit.GetComponent<Health>();
+                // 1. Busca o Health no objeto ou em qualquer pai da hierarquia
+                var health = hit.GetComponentInParent<Health>();
                 if (health == null || health.IsDead) continue;
 
-                float sqrDist = ((Vector2)hit.transform.position - (Vector2)transform.position).sqrMagnitude;
+                // 2. Calcula a distância em relação à RAIZ do inimigo (health.transform)
+                Vector2 enemyPos = health.transform.position;
+                float sqrDist = (enemyPos - (Vector2)transform.position).sqrMagnitude;
+
+                // 3. Garante rigorosamente que o pivô do inimigo NÃO passou do alcance máximo
+                if (sqrDist > maxSqrRange) continue;
+
                 if (sqrDist < nearestSqrDist)
                 {
                     nearestSqrDist = sqrDist;
-                    nearest = hit.transform;
+                    nearest = health.transform; // Mira na raiz do inimigo, não no collider filho
                 }
             }
             return nearest;

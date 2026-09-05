@@ -15,5 +15,13 @@ namespace Nucleo
     /// </summary>
     public class RusherEnemy : EnemyBase
     {
+        [SerializeField] AudioClip hitClip;
+        [SerializeField] float pitchMin = 1.15f, pitchMax = 1.35f; // por tipo de inimigo
+        AudioSource src;
+
+        void PlayHit() {
+            src.pitch = Random.Range(pitchMin, pitchMax);
+            src.PlayOneShot(hitClip);
+        }
     }
 }

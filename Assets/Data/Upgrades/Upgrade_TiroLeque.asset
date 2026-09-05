@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Upgrade_TiroLeque
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
   displayName: Fork
-  description: 
-  icon: {fileID: 0}
+  description: "Bifurca o processo principal de disparo em m\xFAltiplas threads simult\xE2neas que se espalham pela rede."
+  icon: {fileID: 5839820706974066888, guid: 55e5098392d744e46af476eadbbfd847, type: 3}
   category: 0
   weaponPrefab: {fileID: 2862889451173527468, guid: 7d0d4b628a2746a4491a5b63e5697b5b, type: 3}
   passiveType: 0

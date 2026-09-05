@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Upgrade_Dano
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
   displayName: Payload
-  description: 
-  icon: {fileID: 0}
+  description: "Sobrescreve os protocolos de seguran\xE7a da sua porta de sa\xEDda, injetando pacotes altamente destrutivos."
+  icon: {fileID: -8741735951748655860, guid: 704690883cf5d4b4b80a9d2eaf68be9d, type: 3}
   category: 1
   weaponPrefab: {fileID: 0}
   passiveType: 1

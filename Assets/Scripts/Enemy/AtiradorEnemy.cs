@@ -28,7 +28,14 @@ namespace Nucleo
         [SerializeField] private GameObject projectilePrefab;
 
         private float _burstTimer;
+        [SerializeField] AudioClip hitClip;
+        [SerializeField] float pitchMin = 0.45f, pitchMax = 0.60f; // por tipo de inimigo
+        AudioSource src;
 
+        void PlayHit() {
+            src.pitch = Random.Range(pitchMin, pitchMax);
+            src.PlayOneShot(hitClip);
+        }
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -50,6 +57,7 @@ namespace Nucleo
 
             float dist = Vector2.Distance(_rb.position, _currentTarget.position);
             Vector2 dirToTarget = ((Vector2)_currentTarget.position - _rb.position).normalized;
+            transform.up = dirToTarget;
 
             if (dist > maxRange)
                 _rb.linearVelocity = dirToTarget * moveSpeed;

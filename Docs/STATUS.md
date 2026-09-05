@@ -150,3 +150,20 @@ easter eggs, sprites customizados, música/mixagem completas e callouts de onda.
 	debounce para preservar o feedback de boss.
 - Screen shake combina eventos simultâneos pelo máximo de amplitude/duração, nunca por soma.
 - Damage numbers permanecem somente no boss até o HP dos inimigos comuns ser confirmado.
+
+
+### Sessão — UI mínima P1 (2026-09-04)
+
+**O que foi feito nesta sessão:**
+Leitura de STATUS.md, SCOPE_LOCK.md e do código real (Health.cs, CoreIntegrity.cs,
+PlayerProgression.cs, UpgradeManager.cs, UpgradeData.cs, GameManager.cs, EnemySpawner.cs).
+Entregues 4 scripts novos em Assets/Scripts/UI/ (namespace Nucleo.UI): UITheme.cs,
+HUDController.cs, UpgradeChoiceUI.cs, NarrativeUIController.cs — cobrindo exatamente o
+item P1 "UI mínima" (abertura, HUD Player, HUD Núcleo, XP, level-up 3 cards, vitória,
+derrota). Escopo deliberadamente sem variantes de texto por integridade nem easter egg
+por tipo de inimigo (isso é P2). Nenhum script de gameplay existente foi alterado.
+
+**O que ficou pendente/quebrado:**
+- Ícones dos 3 upgrades do MVP (UpgradeData.icon) precisam existir pra UpgradeChoiceUI
+  mostrar algo — depende da sessão de arte (P1 "arte/polimento"), ainda não fechada.
+- As barras de vida e XP não funcionam realmente.

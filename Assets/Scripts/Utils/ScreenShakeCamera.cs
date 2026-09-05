@@ -4,16 +4,12 @@ namespace Nucleo
 {
     public class ScreenShakeCamera : MonoBehaviour
     {
-        private Vector3 _basePosition;
-
-        private void Awake()
-        {
-            _basePosition = transform.localPosition;
-        }
-
         private void LateUpdate()
         {
-            transform.localPosition = _basePosition + ScreenShake.CurrentOffset;
+            if (ScreenShake.CurrentOffset != Vector3.zero)
+            {
+                transform.position += ScreenShake.CurrentOffset;
+            }
         }
     }
 }

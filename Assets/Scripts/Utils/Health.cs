@@ -52,11 +52,6 @@ namespace Nucleo
             OnDamaged -= OnDamagedFlash;
         }
 
-        /// <summary>
-        /// Chame isso ao reciclar um objeto do pool (ex.: inimigo que voltou
-        /// a ficar ativo depois de ter morrido antes). Sem isso, um inimigo
-        /// reciclado voltaria com HP zerado/morto.
-        /// </summary>
         public void ResetHealth()
         {
             CurrentHP = maxHP;
@@ -71,7 +66,19 @@ namespace Nucleo
             OnHealthChanged?.Invoke(CurrentHP, maxHP);
         }
 
+        /// <summary> Dano padrão (com origem do GameObject). </summary>
         public void TakeDamage(float amount, GameObject source = null)
+        {
+            ApplyDamage(amount, source, null, 0f);
+        }
+
+        /// <summary> Dano com cálculo de Knockback (afastamento). </summary>
+        public void TakeDamage(float amount, Vector3 hitSourcePosition, float knockbackForce = 5f, GameObject source = null)
+        {
+            ApplyDamage(amount, source, hitSourcePosition, knockbackForce);
+        }
+
+        private void ApplyDamage(float amount, GameObject source, Vector3? hitSourcePosition, float knockbackForce)
         {
             if (IsDead || amount <= 0f) return;
 
@@ -79,6 +86,26 @@ namespace Nucleo
             OnDamaged?.Invoke(amount, source);
             AnyDamaged?.Invoke(this, amount, source);
             OnHealthChanged?.Invoke(CurrentHP, maxHP);
+
+            // Flash de dano no Sprite
+            if (TryGetComponent<DamageFlash>(out var flash))
+                flash.Flash();
+
+            // Congelamento de impacto (ex: 40ms)
+            HitStop.Trigger(this, 40f);
+
+            // Afastamento (Knockback) imediato — funciona mesmo com HitStop (Time.timeScale = 0)
+            if (hitSourcePosition.HasValue && knockbackForce > 0f && TryGetComponent<Rigidbody2D>(out var rb))
+            {
+                Vector2 pushDirection = ((Vector2)transform.position - (Vector2)hitSourcePosition.Value).normalized;
+                
+                // Deslocamento instantâneo no espaço para dar a sensação imediata do impacto
+                transform.position += (Vector3)(pushDirection * (knockbackForce * 0.04f));
+                rb.linearVelocity = pushDirection * knockbackForce;
+            }
+
+            // Shake de câmera
+            ScreenShake.Trigger(this, amplitude: 0.35f, duration: 0.18f);
 
             if (CurrentHP <= 0f)
             {

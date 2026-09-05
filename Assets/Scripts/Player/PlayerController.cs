@@ -49,7 +49,10 @@ namespace Nucleo
             _moveInput = new Vector2(h, v).normalized;
 
             if (_moveInput.sqrMagnitude > 0.01f)
+            {
                 FacingDirection = _moveInput;
+                transform.up = _moveInput;
+            }
         }
 
         private void FixedUpdate()

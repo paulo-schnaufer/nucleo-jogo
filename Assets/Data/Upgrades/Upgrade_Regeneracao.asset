@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Upgrade_Regeneracao
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
   displayName: "Redund\xE2ncia"
-  description: 
-  icon: {fileID: 0}
+  description: "Aloca banda secund\xE1ria para rodar processos de recupera\xE7\xE3o cont\xEDnua nos setores corrompidos."
+  icon: {fileID: 8230488904728474184, guid: acd49164c55e35c43a17b0d05459a849, type: 3}
   category: 1
   weaponPrefab: {fileID: 0}
   passiveType: 2

@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 7790582021307968515}
   - component: {fileID: 3275123159498813908}
   - component: {fileID: -566722749257083141}
-  - component: {fileID: 5271114672765628139}
   - component: {fileID: 2326615010156443990}
+  - component: {fileID: 2948602491397312381}
+  - component: {fileID: 5690715880630701526}
   m_Layer: 8
   m_Name: BossEnemy
   m_TagString: Enemy
@@ -32,8 +33,8 @@ Transform:
   m_GameObject: {fileID: 2055057248697513125}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.45434, y: 1.5447, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +78,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &7790582021307968515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,12 +103,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3312e48f26ba23b4b84293af16b1c1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.BossEnemy
-  moveSpeed: 2
+  moveSpeed: 3
   contactDamage: 10
   contactDamageInterval: 1
+  knockbackForce: 50
   xpOrbPrefab: {fileID: 1043177383665105633, guid: 5030e37e6453c3645adf6ac6887c00ac, type: 3}
   xpValue: 5
-  attackRange: 5
+  attackRange: 10
   telegraphDuration: 1.2
   overflowWindow: 0.15
   overflowRadius: 3
@@ -119,6 +121,9 @@ MonoBehaviour:
   OnOverflowFire:
     m_PersistentCalls:
       m_Calls: []
+  hitClip: {fileID: 8300000, guid: d9808a851fc8f174480adb857741f62f, type: 3}
+  pitchMin: 0.45
+  pitchMax: 0.6
 --- !u!212 &-566722749257083141
 SpriteRenderer:
   serializedVersion: 3
@@ -168,8 +173,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 3c589234878f67c4b98206ee4fa7746d, type: 2}
-  m_Color: {r: 0.90956545, g: 0.9622642, b: 0.11196138, a: 1}
+  m_Sprite: {fileID: -8825041670847906069, guid: 5a05d0bf94f8e14418d4c00febe1ebaf, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -179,8 +184,79 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
---- !u!61 &5271114672765628139
-BoxCollider2D:
+--- !u!114 &2326615010156443990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055057248697513125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd6a354842530e949b483fab1cfa77d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.DamageFlash
+  duration: 0.09
+--- !u!68 &2948602491397312381
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055057248697513125}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -1.0195667, y: -0.45243695}
+  - {x: -1.0451381, y: 0.20823526}
+  - {x: -0.9565974, y: 0.36299092}
+  - {x: -0.79798824, y: 0.4476455}
+  - {x: -0.21483177, y: 0.46810365}
+  - {x: -0.091374084, y: 0.7652863}
+  - {x: 0.19419959, y: 0.7597343}
+  - {x: 0.3287557, y: 0.43469167}
+  - {x: 0.9409701, y: 0.4328249}
+  - {x: 1.1141971, y: 0.20071207}
+  - {x: 1.1078863, y: -0.418225}
+  - {x: 0.8640113, y: -0.5895287}
+  - {x: 0.40686917, y: -0.5452846}
+  - {x: 0.27457446, y: -0.74706036}
+  - {x: -0.17297542, y: -0.79497313}
+  - {x: -0.345855, y: -0.5326843}
+  - {x: -1.0013175, y: -0.54292357}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
+--- !u!68 &5690715880630701526
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -214,27 +290,26 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2326615010156443990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055057248697513125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd6a354842530e949b483fab1cfa77d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.DamageFlash
-  duration: 0.09
+  m_Points:
+  - {x: -1.0195667, y: -0.45243695}
+  - {x: -1.0451381, y: 0.20823526}
+  - {x: -0.9565974, y: 0.36299092}
+  - {x: -0.79798824, y: 0.4476455}
+  - {x: -0.21483177, y: 0.46810365}
+  - {x: -0.091374084, y: 0.7652863}
+  - {x: 0.19419959, y: 0.7597343}
+  - {x: 0.3287557, y: 0.43469167}
+  - {x: 0.9409701, y: 0.4328249}
+  - {x: 1.1141971, y: 0.20071207}
+  - {x: 1.1078863, y: -0.418225}
+  - {x: 0.8640113, y: -0.5895287}
+  - {x: 0.40686917, y: -0.5452846}
+  - {x: 0.27457446, y: -0.74706036}
+  - {x: -0.17297542, y: -0.79497313}
+  - {x: -0.345855, y: -0.5326843}
+  - {x: -1.0013175, y: -0.54292357}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0

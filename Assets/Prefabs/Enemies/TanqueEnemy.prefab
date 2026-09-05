@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -7888911340579940082}
   - component: {fileID: 7759097946703792730}
   - component: {fileID: 4651803273478445205}
+  - component: {fileID: 3953683248041558569}
   m_Layer: 8
   m_Name: TanqueEnemy
   m_TagString: Enemy
@@ -32,8 +33,8 @@ Transform:
   m_GameObject: {fileID: 8305347642106073466}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.45434, y: 1.5447, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +78,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &8137621246428454772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,10 +106,14 @@ MonoBehaviour:
   moveSpeed: 2
   contactDamage: 10
   contactDamageInterval: 1
+  knockbackForce: 30
   xpOrbPrefab: {fileID: 1043177383665105633, guid: 5030e37e6453c3645adf6ac6887c00ac, type: 3}
   xpValue: 1
   leakGrowthPerSecond: 0.6
   contactDamageCap: 24
+  hitClip: {fileID: 8300000, guid: d9808a851fc8f174480adb857741f62f, type: 3}
+  pitchMin: 0.65
+  pitchMax: 0.8
 --- !u!212 &-7888911340579940082
 SpriteRenderer:
   serializedVersion: 3
@@ -158,7 +163,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 3c589234878f67c4b98206ee4fa7746d, type: 2}
+  m_Sprite: {fileID: -7653039100333099308, guid: 5a05d0bf94f8e14418d4c00febe1ebaf, type: 3}
   m_Color: {r: 0.14036225, g: 0.9496855, b: 0.88496345, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -199,21 +204,21 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0122590065, y: 0.0031123757}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.8666667, y: 1.2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.6429598, y: 1.0070361}
   m_EdgeRadius: 0
 --- !u!114 &4651803273478445205
 MonoBehaviour:
@@ -228,3 +233,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.DamageFlash
   duration: 0.09
+--- !u!61 &3953683248041558569
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8305347642106073466}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.8666667, y: 1.2}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.8666667, y: 1.2}
+  m_EdgeRadius: 0

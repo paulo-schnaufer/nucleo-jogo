@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7813943234170975403}
   - component: {fileID: 1216924931729766797}
   - component: {fileID: 7332095443776624899}
+  - component: {fileID: -6338052818103392786}
   m_Layer: 8
   m_Name: AtiradorEnemy
   m_TagString: Enemy
@@ -32,8 +33,8 @@ Transform:
   m_GameObject: {fileID: 6551569762592427693}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.45434, y: 1.5447, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +78,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &5532590877820292844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,8 +104,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.AtiradorEnemy
   moveSpeed: 2
-  contactDamage: 0
+  contactDamage: 5
   contactDamageInterval: 1
+  knockbackForce: 20
   xpOrbPrefab: {fileID: 1043177383665105633, guid: 5030e37e6453c3645adf6ac6887c00ac, type: 3}
   xpValue: 1
   minRange: 3.5
@@ -114,6 +116,9 @@ MonoBehaviour:
   burstSpreadAngle: 20
   projectileDamage: 5
   projectilePrefab: {fileID: 6425653836862767806, guid: fa86c2136d2fb734cab6b6ab1b5dad0d, type: 3}
+  hitClip: {fileID: 8300000, guid: 7cbc29ea87c493e4fb31d11d68ce4cc0, type: 3}
+  pitchMin: 0.45
+  pitchMax: 0.6
 --- !u!212 &7813943234170975403
 SpriteRenderer:
   serializedVersion: 3
@@ -163,8 +168,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 3c589234878f67c4b98206ee4fa7746d, type: 2}
-  m_Color: {r: 0.4716981, g: 0.0044499086, b: 0.0044499086, a: 1}
+  m_Sprite: {fileID: -8084874238274840218, guid: 5a05d0bf94f8e14418d4c00febe1ebaf, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -204,21 +209,21 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.005715847, y: -0.01143229}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.4666667, y: 1.2666667}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.3180513, y: 1.1066186}
   m_EdgeRadius: 0
 --- !u!114 &7332095443776624899
 MonoBehaviour:
@@ -233,3 +238,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.DamageFlash
   duration: 0.09
+--- !u!61 &-6338052818103392786
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6551569762592427693}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.4666667, y: 1.2666667}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.4666667, y: 1.2666667}
+  m_EdgeRadius: 0

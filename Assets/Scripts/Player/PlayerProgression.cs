@@ -37,6 +37,7 @@ namespace Nucleo
             CurrentXP += amount;
             // "while" (não "if") de propósito: cobre o caso de ganhar XP
             // suficiente pra subir 2+ níveis de uma vez (ex.: matar o boss).
+
             while (CurrentXP >= XPToNextLevel)
             {
                 CurrentXP -= XPToNextLevel;

@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2860741909766797329}
+  - {fileID: 5473318554203457034}
   m_Father: {fileID: 4247345898318633086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6440469902101645271
@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 4602756059420843524}
   - component: {fileID: 1245680034192432659}
   - component: {fileID: 1745836622631630421}
+  - component: {fileID: 6228917425920721343}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -65,7 +66,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.54038, y: 0.54038, z: 0.54038}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 934437953189606475}
@@ -120,7 +121,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -1369133203827550807, guid: 5a05d0bf94f8e14418d4c00febe1ebaf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -196,13 +197,13 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.6, y: 1.3333334}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.24, y: 0.2}
   m_EdgeRadius: 0
 --- !u!114 &5018736956172680434
 MonoBehaviour:
@@ -216,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4855d39cc6d32104ca0249e4b50808b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
-  maxHP: 100
+  maxHP: 50
 --- !u!114 &4602756059420843524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,9 +258,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58047c0d7bf7f6a478b8e434caac175a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PlayerProgression
-  baseXPToLevel: 20
+  baseXPToLevel: 10
   xpCurveMultiplier: 1.35
---- !u!1001 &4695470788479373525
+--- !u!114 &6228917425920721343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6440469902101645271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd6a354842530e949b483fab1cfa77d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.DamageFlash
+  duration: 0.09
+--- !u!1001 &3274097585520619214
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -268,24 +282,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 934437953189606475}
     m_Modifications:
     - target: {fileID: 1495386438754325686, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
+      propertyPath: range
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495386438754325686, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
       propertyPath: fireRate
-      value: 10
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495386438754325686, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
+      propertyPath: baseDamage
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6562383802996083937, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
       propertyPath: m_Name
       value: Turret
-      objectReference: {fileID: 0}
-    - target: {fileID: 7393446390257526980, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.8505496
-      objectReference: {fileID: 0}
-    - target: {fileID: 7393446390257526980, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.8505496
-      objectReference: {fileID: 0}
-    - target: {fileID: 7393446390257526980, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.8505496
       objectReference: {fileID: 0}
     - target: {fileID: 7393446390257526980, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -305,15 +315,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7393446390257526980, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7393446390257526980, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7393446390257526980, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7393446390257526980, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -332,8 +342,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
---- !u!4 &2860741909766797329 stripped
+--- !u!4 &5473318554203457034 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7393446390257526980, guid: dfbc7fdbff1aea5439447ebeaf9ae6e6, type: 3}
-  m_PrefabInstance: {fileID: 4695470788479373525}
+  m_PrefabInstance: {fileID: 3274097585520619214}
   m_PrefabAsset: {fileID: 0}

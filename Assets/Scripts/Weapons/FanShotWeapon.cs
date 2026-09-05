@@ -62,26 +62,30 @@ namespace Nucleo
             _cooldown = 1f / fireRate;
         }
 
-        // Duplicado de AutoTurretWeapon.FindNearestEnemy de propósito: são
-        // ~10 linhas, e extrair uma classe-base só pra isso reabriria uma
-        // decisão de arquitetura (como as armas se compõem) que não está no
-        // escopo desta tarefa — ver observação no STATUS.md desta sessão.
         private Transform FindNearestEnemy()
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
             Transform nearest = null;
             float nearestSqrDist = float.MaxValue;
+            float maxSqrRange = range * range; // Limite matemático rígido do raio (4 * 4 = 16)
 
             foreach (var hit in hits)
             {
-                var health = hit.GetComponent<Health>();
+                // 1. Busca o Health no objeto ou em qualquer pai da hierarquia
+                var health = hit.GetComponentInParent<Health>();
                 if (health == null || health.IsDead) continue;
 
-                float sqrDist = ((Vector2)hit.transform.position - (Vector2)transform.position).sqrMagnitude;
+                // 2. Calcula a distância em relação ao centro real do inimigo
+                Vector2 enemyPos = health.transform.position;
+                float sqrDist = (enemyPos - (Vector2)transform.position).sqrMagnitude;
+
+                // 3. Descarta se o centro do inimigo estiver além das 4 unidades
+                if (sqrDist > maxSqrRange) continue;
+
                 if (sqrDist < nearestSqrDist)
                 {
                     nearestSqrDist = sqrDist;
-                    nearest = hit.transform;
+                    nearest = health.transform;
                 }
             }
             return nearest;

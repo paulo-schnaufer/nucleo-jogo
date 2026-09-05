@@ -21,7 +21,14 @@ namespace Nucleo
 
         private float _baseContactDamage;
         private float _aliveTime;
+        [SerializeField] AudioClip hitClip;
+        [SerializeField] float pitchMin = 0.65f, pitchMax = 0.80f; // por tipo de inimigo
+        AudioSource src;
 
+        void PlayHit() {
+            src.pitch = Random.Range(pitchMin, pitchMax);
+            src.PlayOneShot(hitClip);
+        }
         protected override void Awake()
         {
             base.Awake();

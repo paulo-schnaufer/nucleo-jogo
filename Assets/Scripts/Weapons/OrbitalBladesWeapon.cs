@@ -82,6 +82,20 @@ namespace Nucleo
             }
         }
 
+        public void AddBlades(int amount)
+        {
+            bladeCount += amount;
+            
+            // Destrói os objetos das lâminas antigas
+            foreach (Transform blade in _blades)
+            {
+                if (blade != null) Destroy(blade.gameObject);
+            }
+            _blades.Clear();
+            
+            // Recria as lâminas com a nova quantidade distribuída em 360 graus
+            SpawnBlades();
+        }
         private void Update()
         {
             // Mesma guarda das outras armas: painel de upgrade pausa via timeScale.

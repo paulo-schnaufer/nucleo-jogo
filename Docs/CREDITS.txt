@@ -13,3 +13,37 @@ CRÉDITOS DE ÁUDIO E EFEITOS SONOROS
   Licença: Creative Commons CC0 (Domínio Público)
 
 ============================================================================
+CRÉDITOS DE ARTE E SPRITES
+============================================================================
+
+* "Particle Pack"
+  Autor: Kenney Vleugels
+  Fonte: https://kenney.nl/assets/particle-pack
+  Licença: Creative Commons CC0 (Domínio Público)
+
+* "UI Pack - Sci-Fi"
+  Autor: Kenney Vleugels
+  Fonte: https://kenney.nl/assets/ui-pack-sci-fi
+  Licença: Creative Commons CC0 (Domínio Público)
+
+* "Smoke Particles"
+  Autor: Kenney Vleugels
+  Fonte: https://kenney.nl/assets/smoke-particles
+  Licença: Creative Commons CC0 (Domínio Público)
+
+* "Game Icons"
+  Autor: Kenney Vleugels
+  Fonte: https://kenney.nl/assets/game-icons
+  Licença: Creative Commons CC0 (Domínio Público)
+
+* "Generic Items"
+  Autor: Kenney Vleugels
+  Fonte: https://kenney.nl/assets/generic-items
+  Licença: Creative Commons CC0 (Domínio Público)
+
+* "Pixel Effects Pack"
+  Autores: DavitMasia e CodeManuPro
+  Fonte: https://codemanu.itch.io/pixelart-effect-pack
+  Licença: Creative Commons CC0 (Domínio Público)
+
+============================================================================

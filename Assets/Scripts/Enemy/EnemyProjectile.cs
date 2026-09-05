@@ -3,18 +3,12 @@ using UnityEngine;
 
 namespace Nucleo
 {
-    /// <summary>
-    /// Projétil disparado pelo Atirador (DDoS) contra o Núcleo. Segue o mesmo padrão de
-    /// pooling já usado no projeto (ObjectPool.Instance.Get / PoolItem.ReturnToPool), visto
-    /// em EnemyBase.SpawnXPOrb — nunca Instantiate/Destroy em runtime.
-    /// O prefab precisa ter um componente PoolItem, como qualquer objeto gerenciado pelo
-    /// ObjectPool (mesmo requisito do xpOrbPrefab).
-    /// </summary>
     [RequireComponent(typeof(PoolItem))]
     public class EnemyProjectile : MonoBehaviour
     {
         [SerializeField] private float speed = 8f;
         [SerializeField] private float lifetime = 4f;
+        [SerializeField] private float knockbackForce = 4f;
 
         private Vector2 _direction;
         private float _damage;
@@ -35,6 +29,7 @@ namespace Nucleo
         {
             _direction = direction.normalized;
             _damage = damage;
+            transform.up = _direction;
         }
 
         private void Update()
@@ -47,11 +42,20 @@ namespace Nucleo
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            // Mesmo filtro usado em EnemyBase.OnTriggerStay2D: só jogador/Núcleo tomam dano.
-            if (other.transform != EnemyBase.CoreTarget && other.transform != EnemyBase.PlayerTarget) return;
+            // Valida o topo da hierarquia (.root) para aceitar colisores em objetos filhos
+            bool isPlayer = EnemyBase.PlayerTarget != null && other.transform.root == EnemyBase.PlayerTarget.root;
+            bool isCore = EnemyBase.CoreTarget != null && other.transform.root == EnemyBase.CoreTarget.root;
 
-            var health = other.GetComponent<Health>();
-            if (health != null) health.TakeDamage(_damage, gameObject);
+            if (!isPlayer && !isCore) return;
+
+            var health = other.GetComponentInParent<Health>();
+            if (health == null) health = other.GetComponent<Health>();
+
+            if (health != null)
+            {
+                // Repassa a posição do tiro e a força de repulsão
+                health.TakeDamage(_damage, transform.position, knockbackForce, gameObject);
+            }
 
             _poolItem.ReturnToPool();
         }

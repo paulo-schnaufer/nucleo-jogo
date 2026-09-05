@@ -21,7 +21,7 @@
 # Forçando a exclusão para leitura limpa da IA
 /ProjectSettings/
 /Packages/
-
+/Assets/Importados
 # Builds e temporários da Unity que podem ter ficado de fora
 /[Log]/
 /[Logs]/

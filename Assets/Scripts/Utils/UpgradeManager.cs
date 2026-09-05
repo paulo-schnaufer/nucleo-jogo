@@ -100,7 +100,25 @@ namespace Nucleo
             if (upgrade.category == UpgradeCategory.Weapon)
             {
                 if (upgrade.weaponPrefab != null && weaponSlotsRoot != null)
-                    Instantiate(upgrade.weaponPrefab, weaponSlotsRoot);
+                {
+                    // O Unity adiciona "(Clone)" ao nome quando instancia. Vamos procurar se já existe.
+                    Transform existingWeapon = weaponSlotsRoot.Find(upgrade.weaponPrefab.name + "(Clone)");
+                    
+                    if (existingWeapon != null)
+                    {
+                        // Se já temos a arma, tentamos acumular os atributos
+                        var orbital = existingWeapon.GetComponent<OrbitalBladesWeapon>();
+                        if (orbital != null) 
+                        {
+                            orbital.AddBlades(1); // Adiciona +1 lâmina à formação atual
+                        }
+                    }
+                    else
+                    {
+                        // Primeira vez pegando a arma, criamos do zero
+                        Instantiate(upgrade.weaponPrefab, weaponSlotsRoot);
+                    }
+                }
                 return;
             }
 

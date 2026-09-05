@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Upgrade_RaioColeta
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
   displayName: Cache
-  description: 
-  icon: {fileID: 0}
+  description: "Expande o algoritmo de varredura de mem\xF3ria, for\xE7ando a intercepta\xE7\xE3o de dados \xF3rf\xE3os \xE0 dist\xE2ncia."
+  icon: {fileID: -6311638614420288722, guid: 7621d84bb1ed64e41a8c265bf3c46026, type: 3}
   category: 1
   weaponPrefab: {fileID: 0}
   passiveType: 3

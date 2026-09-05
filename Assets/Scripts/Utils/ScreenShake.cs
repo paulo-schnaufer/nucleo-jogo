@@ -21,12 +21,15 @@ namespace Nucleo
             if (mainCamera != null && mainCamera.GetComponent<ScreenShakeCamera>() == null)
                 mainCamera.gameObject.AddComponent<ScreenShakeCamera>();
 
+            // Lendo a variável _active aqui para pará-la (isso remove o warning CS0414)
             if (_active != null && _runner != null)
                 _runner.StopCoroutine(_active);
 
             _runner = runner;
             _activeAmplitude = Mathf.Max(_activeAmplitude, amplitude);
             _activeDuration = Mathf.Max(_activeDuration, duration);
+            
+            // Atribuindo valor à variável _active aqui
             _active = runner.StartCoroutine(Routine());
         }
 
