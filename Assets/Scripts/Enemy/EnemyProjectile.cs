@@ -42,21 +42,18 @@ namespace Nucleo
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            // Valida o topo da hierarquia (.root) para aceitar colisores em objetos filhos
-            bool isPlayer = EnemyBase.PlayerTarget != null && other.transform.root == EnemyBase.PlayerTarget.root;
-            bool isCore = EnemyBase.CoreTarget != null && other.transform.root == EnemyBase.CoreTarget.root;
+            // 1. Busca o Health no objeto colidido ou em seus pais
+            var health = other.GetComponentInParent<Health>();
+            if (health == null) return;
+
+            // 2. Valida diretamente se o Health encontrado pertence ao Jogador ou ao Núcleo
+            bool isPlayer = EnemyBase.PlayerTarget != null && health.transform == EnemyBase.PlayerTarget;
+            bool isCore = EnemyBase.CoreTarget != null && health.transform == EnemyBase.CoreTarget;
 
             if (!isPlayer && !isCore) return;
 
-            var health = other.GetComponentInParent<Health>();
-            if (health == null) health = other.GetComponent<Health>();
-
-            if (health != null)
-            {
-                // Repassa a posição do tiro e a força de repulsão
-                health.TakeDamage(_damage, transform.position, knockbackForce, gameObject);
-            }
-
+            // 3. Aplica o dano e retorna o projétil ao pool
+            health.TakeDamage(_damage, transform.position, knockbackForce, gameObject);
             _poolItem.ReturnToPool();
         }
     }

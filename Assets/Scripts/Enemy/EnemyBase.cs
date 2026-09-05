@@ -40,17 +40,27 @@ namespace Nucleo
             _rb.gravityScale = 0f;
             _rb.freezeRotation = true;
         }
-
         protected virtual void OnEnable()
         {
             _health.ResetHealth();
             _health.OnDeath += HandleDeath;
+            _health.OnDamaged += HandleDamage; // Adicione esta linha
             _lastContactDamageTime = -999f;
         }
 
         protected virtual void OnDisable()
         {
             _health.OnDeath -= HandleDeath;
+            _health.OnDamaged -= HandleDamage; // Adicione esta linha
+        }
+
+        // Crie este método no final da classe EnemyBase:
+        private void HandleDamage(float amount, GameObject source)
+        {
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayHit();
+            }
         }
 
         protected virtual void Update()
@@ -103,7 +113,22 @@ namespace Nucleo
         private void HandleDeath()
         {
             SpawnXPOrb();
-            GetComponent<PoolItem>().ReturnToPool();
+            StartCoroutine(DeathRoutine());
+        }
+
+        private System.Collections.IEnumerator DeathRoutine()
+        {
+            // Desativa colisão e movimentação imediatamente para não tomar mais dano nem andar
+            if (TryGetComponent<Collider2D>(out var col)) col.enabled = false;
+            
+            // Aguarda o tempo do flash branco acontecer no olho do jogador (0.08s em tempo real)
+            yield return new WaitForSecondsRealtime(0.08f);
+
+            // Reativa o collider para quando o objeto for reutilizado pelo pool
+            if (col != null) col.enabled = true;
+
+            // Devolve ao pool
+            GetComponent<PoolItem>()?.ReturnToPool();
         }
 
         private void SpawnXPOrb()

@@ -112,4 +112,17 @@ public class AudioManager : MonoBehaviour
         src.pitch = Random.Range(hitPitchRange.x, hitPitchRange.y);
         src.Play();
     }
+
+    /// <summary>
+    /// Troca a música atual por uma nova de forma imediata (hard cut).
+    /// </summary>
+    public void ChangeMusic(AudioClip newMusic)
+    {
+        if (_musicSource == null || newMusic == null) return;
+        if (_musicSource.clip == newMusic) return; // Evita reiniciar se já for a mesma música
+
+        _musicSource.Stop();
+        _musicSource.clip = newMusic;
+        _musicSource.Play();
+    }
 }

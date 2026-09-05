@@ -28,14 +28,7 @@ namespace Nucleo
         [SerializeField] private GameObject projectilePrefab;
 
         private float _burstTimer;
-        [SerializeField] AudioClip hitClip;
-        [SerializeField] float pitchMin = 0.45f, pitchMax = 0.60f; // por tipo de inimigo
-        AudioSource src;
 
-        void PlayHit() {
-            src.pitch = Random.Range(pitchMin, pitchMax);
-            src.PlayOneShot(hitClip);
-        }
         protected override void OnEnable()
         {
             base.OnEnable();

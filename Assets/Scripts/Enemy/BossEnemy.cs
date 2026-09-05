@@ -23,6 +23,7 @@ namespace Nucleo
         private enum BossPhase { Approaching, Telegraphing, Overflowing, Cooldown }
 
         [Header("Boss - Stack Overflow")]
+        [SerializeField] private AudioClip bossMusicClip;
         [SerializeField] private float attackRange = 3f;
         [SerializeField] private float telegraphDuration = 1.2f;
         [SerializeField] private float overflowWindow = 0.15f;
@@ -36,20 +37,30 @@ namespace Nucleo
         private BossPhase _phase;
         private float _phaseTimer;
 
-        [SerializeField] AudioClip hitClip;
-        [SerializeField] float pitchMin = 0.45f, pitchMax = 0.60f; // por tipo de inimigo
-        AudioSource src;
-
-        void PlayHit() {
-            src.pitch = Random.Range(pitchMin, pitchMax);
-            src.PlayOneShot(hitClip);
-        }
     
+        [Header("Boss - Zoom de Câmera")]
+        [SerializeField] private float bossCamSize = 8.5f; // Tamanho maior da câmera (ex: padrão costuma ser 5)
+        [SerializeField] private float zoomDuration = 1.5f;
+
         protected override void OnEnable()
         {
             base.OnEnable();
             _phase = BossPhase.Approaching;
             _phaseTimer = 0f;
+
+            // Música do Boss
+            if (bossMusicClip != null && AudioManager.Instance != null)
+                AudioManager.Instance.ChangeMusic(bossMusicClip);
+
+            // Zoom Out da câmera ao nascer o Boss
+            if (CameraZoom.Instance != null)
+                CameraZoom.Instance.SetZoom(bossCamSize, zoomDuration);
+        }
+
+        // Sobrescreva o evento de morte para restaurar o zoom quando ele for derrotado
+        protected override void OnDisable()
+        {
+            base.OnDisable();
         }
 
         protected override void FixedUpdate()

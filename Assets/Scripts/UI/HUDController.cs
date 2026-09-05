@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 namespace Nucleo.UI
 {
@@ -35,17 +36,17 @@ namespace Nucleo.UI
         [Header("UI — onda (opcional)")]
         [SerializeField] private TMP_Text waveLabel;
 
-        private void Awake()
-        {
-            // if (playerHealthFill != null) playerHealthFill.color = UITheme.CianoBase;
-            // if (coreHealthFill != null) coreHealthFill.color = UITheme.CoreVioleta;
-            // if (xpFill != null) xpFill.color = UITheme.CianoGlow;
-        }
+        // Variáveis para guardar as cores originais configuradas no Unity
+        private Color originalPlayerColor;
+        private Color originalCoreColor;
+        private float lastPlayerHP = -1f;
+        private float lastCoreHP = -1f;
 
         private void OnEnable()
         {
             if (playerHealth != null) playerHealth.OnHealthChanged += HandlePlayerHealthChanged;
-            if (coreIntegrity != null) coreIntegrity.GetComponent<Health>().OnHealthChanged += HandleCoreHealthChanged;            if (playerProgression != null)
+            if (coreIntegrity != null) coreIntegrity.GetComponent<Health>().OnHealthChanged += HandleCoreHealthChanged;            
+            if (playerProgression != null)
             {
                 playerProgression.OnXPChanged += HandleXPChanged;
                 playerProgression.OnLevelUp += HandleLevelUp;
@@ -67,6 +68,10 @@ namespace Nucleo.UI
 
         private void Start()
         {
+            // Salva as cores exatas que você colocou lá no Unity Editor
+            if (playerHealthFill != null) originalPlayerColor = playerHealthFill.color;
+            if (coreHealthFill != null) originalCoreColor = coreHealthFill.color;
+
             // Estado inicial — os eventos acima só disparam em MUDANÇA, então
             // sem isso a barra ficaria vazia até o primeiro dano/XP.
             if (playerHealth != null) HandlePlayerHealthChanged(playerHealth.CurrentHP, playerHealth.MaxHP);
@@ -84,19 +89,107 @@ namespace Nucleo.UI
 
         private void HandlePlayerHealthChanged(float current, float max)
         {
-            if (playerHealthFill != null) playerHealthFill.fillAmount = max > 0f ? current / max : 0f;
-            if (playerHealthLabel != null) playerHealthLabel.text = $"{Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
+            // Descobre se perdeu vida (Dano) ou ganhou vida (Regen)
+            bool isDamage = lastPlayerHP > 0 && current < lastPlayerHP;
+            lastPlayerHP = current; // Atualiza a memória pro próximo hit
+
+            if (playerHealthFill != null) 
+            {
+                float targetFill = max > 0f ? current / max : 0f;
+                
+                playerHealthFill.DOKill();
+                playerHealthFill.color = originalPlayerColor; 
+                
+                // Só pisca a barra de branco se tomou dano
+                if (isDamage) 
+                {
+                    Sequence dmgSeq = DOTween.Sequence();
+                    dmgSeq.Append(playerHealthFill.DOColor(Color.white, 0.1f)); 
+                    dmgSeq.Append(playerHealthFill.DOColor(originalPlayerColor, 0.2f)); 
+                }
+                
+                playerHealthFill.DOFillAmount(targetFill, 0.3f).SetEase(Ease.OutCubic);
+            }
+            
+            if (playerHealthLabel != null) 
+            {
+                playerHealthLabel.text = $"HP {Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
+                
+                playerHealthLabel.DOKill(); 
+                playerHealthLabel.transform.DOKill();
+                
+                // Só treme e fica vermelho se tomou dano!
+                if (isDamage)
+                {
+                    playerHealthLabel.transform.localScale = Vector3.one; 
+                    playerHealthLabel.color = Color.white; 
+                    
+                    Sequence textSeq = DOTween.Sequence();
+                    textSeq.Append(playerHealthLabel.DOColor(Color.red, 0.1f));
+                    textSeq.Append(playerHealthLabel.DOColor(Color.white, 0.2f));
+
+                    playerHealthLabel.transform.DOPunchScale(Vector3.one * 0.4f, 0.3f, 15, 1);
+                }
+                else
+                {
+                    // Se for regen, apenas garante que o texto fique normal e branco
+                    playerHealthLabel.transform.localScale = Vector3.one;
+                    playerHealthLabel.color = Color.white;
+                }
+            }
         }
 
         private void HandleCoreHealthChanged(float current, float max)
         {
-            if (coreHealthFill != null) coreHealthFill.fillAmount = max > 0f ? current / max : 0f;
-            if (coreHealthLabel != null) coreHealthLabel.text = $"NÚCLEO {Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
+            bool isDamage = lastCoreHP > 0 && current < lastCoreHP;
+            lastCoreHP = current;
+
+            if (coreHealthFill != null) 
+            {
+                float targetFill = max > 0f ? current / max : 0f;
+                
+                coreHealthFill.DOKill();
+                coreHealthFill.color = originalCoreColor;
+                
+                if (isDamage)
+                {
+                    Sequence dmgSeq = DOTween.Sequence();
+                    dmgSeq.Append(coreHealthFill.DOColor(Color.white, 0.1f));
+                    dmgSeq.Append(coreHealthFill.DOColor(originalCoreColor, 0.2f));
+                }
+                
+                coreHealthFill.DOFillAmount(targetFill, 0.3f).SetEase(Ease.OutCubic);
+            }
+            
+            if (coreHealthLabel != null) 
+            {
+                coreHealthLabel.text = $"CHP {Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
+                
+                coreHealthLabel.DOKill();
+                coreHealthLabel.transform.DOKill();
+                
+                if (isDamage)
+                {
+                    coreHealthLabel.transform.localScale = Vector3.one;
+                    coreHealthLabel.transform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 10, 1);
+                }
+                else
+                {
+                    coreHealthLabel.transform.localScale = Vector3.one;
+                }
+            }
         }
 
         private void HandleXPChanged(int current, int toNext)
         {
-            if (xpFill != null) xpFill.fillAmount = toNext > 0 ? (float)current / toNext : 0f;
+            if (xpFill != null) 
+            {
+                float targetFill = toNext > 0 ? (float)current / toNext : 0f;
+                
+                // Se a barra zerou (level up), não anima, apenas reseta
+                if (targetFill == 0) xpFill.fillAmount = 0f;
+                else xpFill.DOFillAmount(targetFill, 0.4f).SetEase(Ease.OutBack);
+            }
         }
 
         private void HandleLevelUp(int newLevel)

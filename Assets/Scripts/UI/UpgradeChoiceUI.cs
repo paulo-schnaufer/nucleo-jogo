@@ -1,17 +1,11 @@
-// NÚCLEO: Última Onda — UI (ver STATUS.md, bloco P1 "UI mínima")
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening; // Obrigatório para as animações
 
 namespace Nucleo.UI
 {
-    /// <summary>
-    /// Painel de escolha de upgrade (3 cards). Só escuta
-    /// UpgradeManager.OnChoicesReady e chama ConfirmChoice no clique — a
-    /// pausa e o sorteio já existem em UpgradeManager, não duplicados aqui
-    /// (ver DECISIONS.md).
-    /// </summary>
     public class UpgradeChoiceUI : MonoBehaviour
     {
         [SerializeField] private GameObject panelRoot;
@@ -20,6 +14,9 @@ namespace Nucleo.UI
         [System.Serializable]
         public class UpgradeCard
         {
+            [Tooltip("Arraste o objeto PAI do card aqui (o fundo que contém tudo)")]
+            public RectTransform cardRoot; // <- NOVA VARIÁVEL AQUI
+            
             public Button button;
             public Image icon;
             public TMP_Text title;
@@ -41,13 +38,22 @@ namespace Nucleo.UI
 
         private void HandleChoicesReady(List<UpgradeData> choices)
         {
+            // 1. ATIVA O PAINEL PRIMEIRO para a Unity organizar a tela
+            if (panelRoot != null) panelRoot.SetActive(true);
+
+            // 2. FORÇA O LAYOUT A ATUALIZAR (Garante que a Unity saiba a posição final exata das cartas)
+            Canvas.ForceUpdateCanvases();
+
             for (int i = 0; i < cards.Count; i++)
             {
                 var card = cards[i];
                 if (card.button == null) continue;
 
                 bool hasChoice = i < choices.Count;
-                card.button.gameObject.SetActive(hasChoice);
+                
+                if (card.cardRoot != null) card.cardRoot.gameObject.SetActive(hasChoice);
+                else card.button.gameObject.SetActive(hasChoice);
+
                 if (!hasChoice) continue;
 
                 UpgradeData data = choices[i];
@@ -57,17 +63,30 @@ namespace Nucleo.UI
 
                 card.button.onClick.RemoveAllListeners();
                 card.button.onClick.AddListener(() => SelectAndClose(data));
-            }
 
-            if (panelRoot != null) panelRoot.SetActive(true);
+                if (card.cardRoot != null)
+                {
+                    // 3. MATA qualquer animação presa de level-ups anteriores
+                    card.cardRoot.DOKill();
+                    
+                    // ESCONDE a carta imediatamente para não "piscar" na tela durante o delay
+                    card.cardRoot.localScale = Vector3.zero;
+                    
+                    // Inicia a queda suave
+                    card.cardRoot.DOAnchorPosY(800f, 0.6f)
+                        .From(true) 
+                        .SetEase(Ease.OutBack)
+                        .SetDelay(i * 0.15f)
+                        .SetUpdate(true)
+                        .OnStart(() => card.cardRoot.localScale = Vector3.one); // REVELA a carta só na hora de despencar
+                }
+            }
         }
 
         private void SelectAndClose(UpgradeData chosen)
         {
             if (panelRoot != null) panelRoot.SetActive(false);
             UpgradeManager.Instance.ConfirmChoice(chosen);
-            // Se houver escolha pendente (level-up duplo), UpgradeManager
-            // dispara OnChoicesReady de novo sozinho — nada a fazer aqui.
         }
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4561478277848539466}
   - component: {fileID: 5407830895771556476}
   - component: {fileID: -6767003749197488262}
+  - component: {fileID: 7084656327013031612}
   m_Layer: 8
   m_Name: EnemyProjectile
   m_TagString: Untagged
@@ -61,6 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.EnemyProjectile
   speed: 8
   lifetime: 4
+  knockbackForce: 4
 --- !u!212 &5407830895771556476
 SpriteRenderer:
   serializedVersion: 3
@@ -157,3 +159,30 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.12247659
+--- !u!50 &7084656327013031612
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6425653836862767806}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

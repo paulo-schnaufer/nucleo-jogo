@@ -87,29 +87,55 @@ namespace Nucleo
             AnyDamaged?.Invoke(this, amount, source);
             OnHealthChanged?.Invoke(CurrentHP, maxHP);
 
+            // Identifica se a entidade é o Player ou o Núcleo
+            bool isPlayer = EnemyBase.PlayerTarget != null && transform.root == EnemyBase.PlayerTarget.root;
+            bool isCore = EnemyBase.CoreTarget != null && transform.root == EnemyBase.CoreTarget.root;
+
             // Flash de dano no Sprite
             if (TryGetComponent<DamageFlash>(out var flash))
                 flash.Flash();
 
-            // Congelamento de impacto (ex: 40ms)
-            HitStop.Trigger(this, 40f);
-
-            // Afastamento (Knockback) imediato — funciona mesmo com HitStop (Time.timeScale = 0)
-            if (hitSourcePosition.HasValue && knockbackForce > 0f && TryGetComponent<Rigidbody2D>(out var rb))
+            // Congelamento de impacto (HitStop) para dar peso aos tiros
+            if (isPlayer)
             {
-                Vector2 pushDirection = ((Vector2)transform.position - (Vector2)hitSourcePosition.Value).normalized;
-                
-                // Deslocamento instantâneo no espaço para dar a sensação imediata do impacto
-                transform.position += (Vector3)(pushDirection * (knockbackForce * 0.04f));
-                rb.linearVelocity = pushDirection * knockbackForce;
+                HitStop.Trigger(this, 40f); 
+            }
+            else if (!isCore && CurrentHP > 0f) // Só dá a pausa se o inimigo CONTINUAR VIVO
+            {
+                HitStop.Trigger(this, 25f); 
             }
 
-            // Shake de câmera
-            ScreenShake.Trigger(this, amplitude: 0.35f, duration: 0.18f);
+            // Afastamento (Knockback) imediato (apenas corpos não estáticos)
+            if (hitSourcePosition.HasValue && knockbackForce > 0f && TryGetComponent<Rigidbody2D>(out var rb))
+            {
+                if (rb.bodyType != RigidbodyType2D.Static)
+                {
+                    Vector2 pushDirection = ((Vector2)transform.position - (Vector2)hitSourcePosition.Value).normalized;
+                    transform.position += (Vector3)(pushDirection * (knockbackForce * 0.04f));
+                    rb.linearVelocity = pushDirection * knockbackForce;
+                }
+            }
+
+            // Shake de câmera por dano convencional
+            if (isCore)
+            {
+                ScreenShake.Trigger(this, amplitude: 0.6f, duration: 0.28f);
+            }
+            else if (isPlayer)
+            {
+                ScreenShake.Trigger(this, amplitude: 0.3f, duration: 0.15f);
+            }
 
             if (CurrentHP <= 0f)
             {
                 IsDead = true;
+
+                // Shake massivo e prolongado no momento em que o Núcleo é destruído
+                if (isCore)
+                {
+                    ScreenShake.Trigger(this, amplitude: 1.8f, duration: 0.75f);
+                }
+
                 OnDeath?.Invoke();
                 AnyDeath?.Invoke(this);
             }
