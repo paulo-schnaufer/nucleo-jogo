@@ -90,12 +90,21 @@ namespace Nucleo
             Transform point = spawnPoints[Random.Range(0, spawnPoints.Count)];
             var enemyGO = ObjectPool.Instance.Get(prefab, point.position, Quaternion.identity);
 
-            EnemiesAliveInWave++;
-            var health = enemyGO.GetComponent<Health>();
-            if (health == null) return;
+            if (enemyGO == null)
+            {
+                Debug.LogError($"[EnemySpawner] ObjectPool.Get retornou null para o prefab '{prefab.name}' — checar se o pool sobrevive a reloads de cena corretamente.");
+                return;
+            }
 
-            // Assina uma vez por spawn; a própria closure se desinscreve ao disparar,
-            // então não conta duas vezes se o inimigo for reciclado e morrer de novo depois.
+            var health = enemyGO.GetComponent<Health>();
+            if (health == null)
+            {
+                Debug.LogError($"[EnemySpawner] Inimigo instanciado sem componente Health: '{prefab.name}'.");
+                return;
+            }
+
+            EnemiesAliveInWave++; // só incrementa depois de confirmar que o inimigo é válido
+
             void HandleDeath()
             {
                 EnemiesAliveInWave--;

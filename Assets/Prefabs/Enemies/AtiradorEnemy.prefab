@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4855d39cc6d32104ca0249e4b50808b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
-  maxHP: 10
+  maxHP: 22
 --- !u!50 &5227323223127731683
 Rigidbody2D:
   serializedVersion: 5
@@ -103,15 +103,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836399bd3815604c9180e1a051c43fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.AtiradorEnemy
-  moveSpeed: 1
-  contactDamage: 2
+  moveSpeed: 2
+  contactDamage: 0
   contactDamageInterval: 0.4
-  knockbackForce: 10
+  knockbackForce: 0
   xpOrbPrefab: {fileID: 1043177383665105633, guid: 5030e37e6453c3645adf6ac6887c00ac, type: 3}
   xpValue: 2
   minRange: 3.5
   maxRange: 6
-  burstCooldown: 2.2
+  burstCooldown: 3.5
   projectilesPerBurst: 3
   burstSpreadAngle: 33
   projectileDamage: 5

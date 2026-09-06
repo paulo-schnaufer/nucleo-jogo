@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4855d39cc6d32104ca0249e4b50808b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
-  maxHP: 50
+  maxHP: 100
 --- !u!114 &4602756059420843524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58047c0d7bf7f6a478b8e434caac175a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PlayerProgression
-  baseXPToLevel: 3
+  baseXPToLevel: 5
   xpCurveMultiplier: 1.22
 --- !u!114 &6228917425920721343
 MonoBehaviour:

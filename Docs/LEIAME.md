@@ -1,8 +1,9 @@
 # Execução
-1. Clique com o botão direito do mouse no arquivo NÚCLEO_ÚltimaOnda.exe deste mesmo diretório e o baixe.
+1. Clique com o botão direito do mouse no arquivo NÚCLEO_ÚltimaOnda.zip deste mesmo diretório e o baixe.
 2. Clique com o botão direito do mouse no arquivo NÚCLEO_ÚltimaOnda.exe, onde tiver sido baixado.
-3. Clique com o botão esquerdo do mouse em "Abrir" ou "Executar como administrador".
-4. Aproveite!
+3. Extraia o pacote .zip em uma pasta separada.
+4. Clique duas vezes com o botão esquerdo do mouse no arquivo NÚCLEO_ÚltimaOnda.exe, onde tiver sido baixado. **Atenção**: deve estar junto dos outros arquivos.
+5. Aproveite!
 
 # Requisitos mínimos
 - Sistema operacional: Windows 10/11
