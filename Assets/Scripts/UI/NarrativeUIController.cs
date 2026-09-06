@@ -1,13 +1,13 @@
 // NÚCLEO: Última Onda — UI
 using UnityEngine;
 using DG.Tweening; 
+using UnityEngine.UI;
 using TMPro;
 
 namespace Nucleo.UI
 {
     public class NarrativeUIController : MonoBehaviour
     {
-        // ... (MANTENHA TODOS OS SEUS [Headers] DE ABERTURA, VITÓRIA, DERROTA E HUD INTACTOS AQUI) ...
         [Header("Abertura")]
         [SerializeField] private GameObject openingPanel;
         [SerializeField] private TMP_Text openingText;
@@ -21,16 +21,18 @@ namespace Nucleo.UI
         [Header("Vitória / Créditos")]
         [SerializeField] private GameObject victoryPanel;
         [SerializeField] private TMP_Text victoryText;
+        [SerializeField] private TMP_Text victoryThanksLabel; 
+        [SerializeField] private Image victoryBlackFade;      
         [TextArea(5, 10)]
-        [SerializeField]
-        private string victoryAndCreditsLines = "Onda neutralizada... (seu texto original aqui)";
+        [SerializeField] private string victoryAndCreditsLines = "...";
 
         [Header("Derrota / Créditos")]
         [SerializeField] private GameObject defeatPanel;
         [SerializeField] private TMP_Text defeatText;
+        [SerializeField] private TMP_Text defeatThanksLabel; 
+        [SerializeField] private Image defeatBlackFade;      
         [TextArea(5, 10)]
-        [SerializeField] 
-        private string defeatAndCreditsLines = "Núcleo comprometido... (seu texto original aqui)";
+        [SerializeField] private string defeatAndCreditsLines = "...";
 
         [Header("HUD")]
         [SerializeField] private GameObject hudPanel;
@@ -38,12 +40,8 @@ namespace Nucleo.UI
         [Header("Sincronização de Créditos")]
         [Tooltip("O AudioSource que está tocando a música do jogo")]
         [SerializeField] private AudioSource creditsMusic;
-        
         [Tooltip("Arraste aqui o SEU NOVO ARQUIVO DE ÁUDIO (versão 0.9x)")]
         [SerializeField] private AudioClip finalCreditsClip; 
-        
-        [Tooltip("Até qual posição Y (altura) o texto deve subir?")]
-        [SerializeField] private float finalScrollY = 1500f;
 
         private void Start()
         {
@@ -93,8 +91,7 @@ namespace Nucleo.UI
                 if (victoryPanel != null) victoryPanel.SetActive(true);
                 if (hudPanel != null) hudPanel.SetActive(false);
                 
-                // Passe o victoryText direto!
-                RollCredits(victoryText); 
+                RollCredits(victoryText, victoryThanksLabel, victoryBlackFade); 
             }
             else if (state == GameManager.GameState.GameOver)
             {
@@ -102,17 +99,16 @@ namespace Nucleo.UI
                 if (defeatPanel != null) defeatPanel.SetActive(true);
                 if (hudPanel != null) hudPanel.SetActive(false);
                 
-                // Passe o defeatText direto!
-                RollCredits(defeatText);
+                RollCredits(defeatText, defeatThanksLabel, defeatBlackFade);
             }
         }
 
-        // Agora recebemos o TMP_Text para saber a altura exata das letras!
-        private void RollCredits(TMP_Text textComponent)
+        private void RollCredits(TMP_Text mainText, TMP_Text thanksLabel, Image blackScreenFade)
         {
-            if (textComponent == null || creditsMusic == null || finalCreditsClip == null) return;
+            if (mainText == null || creditsMusic == null || finalCreditsClip == null) return;
 
-            AudioSource[] todasAsFontesDeAudio = FindObjectsOfType<AudioSource>();
+            // NOVO: Código atualizado para a versão mais recente da Unity sem dar aviso amarelo
+            AudioSource[] todasAsFontesDeAudio = FindObjectsByType<AudioSource>(FindObjectsInactive.Exclude);
             foreach (AudioSource audio in todasAsFontesDeAudio)
             {
                 if (audio != creditsMusic) audio.Stop();
@@ -123,17 +119,47 @@ namespace Nucleo.UI
             creditsMusic.Play();
 
             float duration = finalCreditsClip.length;
+            float alturaReal = mainText.preferredHeight + 800f;
             
-            // A MÁGICA: preferredHeight pega o tamanho real do texto gerado!
-            // + 800f garante que a última linha passe do centro e saia da tela
-            float alturaReal = textComponent.preferredHeight + 800f;
+            RectTransform mainRect = mainText.rectTransform;
+            float startY = mainRect.anchoredPosition.y;
 
-            // Pega o RectTransform do texto para mover
-            RectTransform textRect = textComponent.rectTransform;
+            float distanciaTotal = alturaReal - startY;
+            float velocidade = distanciaTotal / duration;
 
-            textRect.DOAnchorPosY(alturaReal, duration)
+            mainRect.DOAnchorPosY(alturaReal, duration)
                     .SetEase(Ease.Linear)
                     .SetUpdate(true);
+
+            if (thanksLabel != null)
+            {
+                RectTransform thanksRect = thanksLabel.rectTransform;
+                
+                // NOVO: Removemos a divisão por 2. Agora subtraímos a altura INTEIRA do texto principal
+                // Se ainda ficar sobreposto, você pode aumentar esse "- 300f" para "- 600f"
+                float thanksStartY = startY - mainText.preferredHeight - 300f; 
+                thanksRect.anchoredPosition = new Vector2(thanksRect.anchoredPosition.x, thanksStartY);
+
+                float distanciaThanks = 0 - thanksStartY;
+                float thanksDuration = distanciaThanks / velocidade;
+
+                thanksRect.DOAnchorPosY(0, thanksDuration)
+                          .SetEase(Ease.Linear)
+                          .SetUpdate(true);
+            }
+
+            if (blackScreenFade != null)
+            {
+                blackScreenFade.color = new Color(0, 0, 0, 0);
+                blackScreenFade.gameObject.SetActive(true);
+
+                float tempoFade = 5f;
+                float tempoEspera = duration - tempoFade;
+
+                blackScreenFade.DOFade(1f, tempoFade)
+                               .SetDelay(tempoEspera)
+                               .SetUpdate(true);
+            }
         }
     }
 }

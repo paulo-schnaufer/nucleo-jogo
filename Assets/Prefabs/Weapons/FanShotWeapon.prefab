@@ -50,7 +50,7 @@ MonoBehaviour:
   projectileSpeed: 10
   projectilePrefab: {fileID: 3147583085587624011, guid: b62ca062a6a896342a171dabaeb658a0, type: 3}
   projectileCount: 5
-  spreadAngleDegrees: 45
+  spreadAngleDegrees: 70
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256

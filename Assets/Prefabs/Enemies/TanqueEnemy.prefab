@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4855d39cc6d32104ca0249e4b50808b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
-  maxHP: 2
+  maxHP: 60
 --- !u!50 &6025866207564703044
 Rigidbody2D:
   serializedVersion: 5
@@ -103,17 +103,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a7af8bd3209b94d8ffb1b1affcf32b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.TanqueEnemy
-  moveSpeed: 2
+  moveSpeed: 1
   contactDamage: 10
   contactDamageInterval: 1
-  knockbackForce: 30
+  knockbackForce: 6
   xpOrbPrefab: {fileID: 1043177383665105633, guid: 5030e37e6453c3645adf6ac6887c00ac, type: 3}
   xpValue: 1
   leakGrowthPerSecond: 0.6
-  contactDamageCap: 24
-  hitClip: {fileID: 8300000, guid: d9808a851fc8f174480adb857741f62f, type: 3}
-  pitchMin: 0.65
-  pitchMax: 0.8
+  contactDamageCap: 30
 --- !u!212 &-7888911340579940082
 SpriteRenderer:
   serializedVersion: 3
@@ -164,7 +161,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7653039100333099308, guid: 5a05d0bf94f8e14418d4c00febe1ebaf, type: 3}
-  m_Color: {r: 0.14036225, g: 0.9496855, b: 0.88496345, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -233,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.DamageFlash
   duration: 0.09
+  popScale: 1.15
 --- !u!61 &3953683248041558569
 BoxCollider2D:
   m_ObjectHideFlags: 0

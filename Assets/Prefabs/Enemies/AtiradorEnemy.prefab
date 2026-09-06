@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4855d39cc6d32104ca0249e4b50808b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
-  maxHP: 1
+  maxHP: 10
 --- !u!50 &5227323223127731683
 Rigidbody2D:
   serializedVersion: 5
@@ -103,22 +103,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836399bd3815604c9180e1a051c43fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.AtiradorEnemy
-  moveSpeed: 2
-  contactDamage: 5
-  contactDamageInterval: 1
-  knockbackForce: 20
+  moveSpeed: 1
+  contactDamage: 2
+  contactDamageInterval: 0.4
+  knockbackForce: 10
   xpOrbPrefab: {fileID: 1043177383665105633, guid: 5030e37e6453c3645adf6ac6887c00ac, type: 3}
-  xpValue: 1
+  xpValue: 2
   minRange: 3.5
   maxRange: 6
   burstCooldown: 2.2
   projectilesPerBurst: 3
-  burstSpreadAngle: 20
+  burstSpreadAngle: 33
   projectileDamage: 5
   projectilePrefab: {fileID: 6425653836862767806, guid: fa86c2136d2fb734cab6b6ab1b5dad0d, type: 3}
-  hitClip: {fileID: 8300000, guid: 7cbc29ea87c493e4fb31d11d68ce4cc0, type: 3}
-  pitchMin: 0.45
-  pitchMax: 0.6
 --- !u!212 &7813943234170975403
 SpriteRenderer:
   serializedVersion: 3
@@ -238,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.DamageFlash
   duration: 0.09
+  popScale: 1.15
 --- !u!61 &-6338052818103392786
 BoxCollider2D:
   m_ObjectHideFlags: 0

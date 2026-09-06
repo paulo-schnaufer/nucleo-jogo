@@ -1,35 +1,22 @@
 // NÚCLEO: Última Onda — IA de Inimigos (ver STATUS.md)
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening; // Adicionado para os efeitos visuais do boss
 
 namespace Nucleo
 {
-    /// <summary>
-    /// Boss — reskin "stack overflow". Único padrão de ataque telegrafado (SCOPE_LOCK: onda
-    /// 6, "boss com 1 padrão de ataque telegrafado").
-    /// Reaproveita a escolha de alvo padrão de EnemyBase (persegue o mais próximo entre
-    /// jogador e Núcleo — sem regra própria em DECISIONS.md pra este tipo) só na fase de
-    /// aproximação. Ao entrar no alcance de ataque, para de se mover e roda o ciclo
-    /// telegraph -> overflow (dano em área, pode acertar jogador e Núcleo ao mesmo tempo,
-    /// já que "overflow" não distingue vítima) -> cooldown -> aproxima de novo.
-    /// Sobrescreve FixedUpdate porque o movimento padrão da base (sempre avançar até
-    /// encostar) não serve fora da fase de aproximação.
-    /// OnTelegraphStart/OnOverflowFire existem pro Animator/Particle System (âmbar, ver
-    /// STYLE_GUIDE.md seção 5 — telegraph ÂMBAR-ALERTA) se inscreverem sem acoplar esta
-    /// classe a VFX.
-    /// </summary>
     public class BossEnemy : EnemyBase
     {
         private enum BossPhase { Approaching, Telegraphing, Overflowing, Cooldown }
 
         [Header("Boss - Stack Overflow")]
         [SerializeField] private AudioClip bossMusicClip;
-        [SerializeField] private float attackRange = 3f;
-        [SerializeField] private float telegraphDuration = 1.2f;
-        [SerializeField] private float overflowWindow = 0.15f;
-        [SerializeField] private float overflowRadius = 3f;
+        [SerializeField] private float attackRange = 2.8f;
+        [SerializeField] private float telegraphDuration = 1.0f;
+        [SerializeField] private float overflowWindow = 0.2f;
+        [SerializeField] private float overflowRadius = 3.8f;
         [SerializeField] private float overflowDamage = 25f;
-        [SerializeField] private float cooldownDuration = 1.8f;
+        [SerializeField] private float cooldownDuration = 1.2f;
 
         public UnityEvent OnTelegraphStart;
         public UnityEvent OnOverflowFire;
@@ -37,9 +24,8 @@ namespace Nucleo
         private BossPhase _phase;
         private float _phaseTimer;
 
-    
         [Header("Boss - Zoom de Câmera")]
-        [SerializeField] private float bossCamSize = 8.5f; // Tamanho maior da câmera (ex: padrão costuma ser 5)
+        [SerializeField] private float bossCamSize = 8.5f;
         [SerializeField] private float zoomDuration = 1.5f;
 
         protected override void OnEnable()
@@ -48,19 +34,17 @@ namespace Nucleo
             _phase = BossPhase.Approaching;
             _phaseTimer = 0f;
 
-            // Música do Boss
             if (bossMusicClip != null && AudioManager.Instance != null)
                 AudioManager.Instance.ChangeMusic(bossMusicClip);
 
-            // Zoom Out da câmera ao nascer o Boss
             if (CameraZoom.Instance != null)
                 CameraZoom.Instance.SetZoom(bossCamSize, zoomDuration);
         }
 
-        // Sobrescreva o evento de morte para restaurar o zoom quando ele for derrotado
-        protected override void OnDisable()
+        protected override void Update()
         {
-            base.OnDisable();
+            base.Update();
+            LookAtTarget(); // Rotação contínua voltada para o jogador/núcleo
         }
 
         protected override void FixedUpdate()
@@ -71,6 +55,14 @@ namespace Nucleo
                 _rb.linearVelocity = Vector2.zero;
 
             TickPhaseTimer(Time.fixedDeltaTime);
+        }
+
+        private void LookAtTarget()
+        {
+            if (_currentTarget == null) return;
+            Vector2 dir = ((Vector2)_currentTarget.position - _rb.position).normalized;
+            if (dir != Vector2.zero)
+                transform.up = dir;
         }
 
         private void TickApproaching()
@@ -87,6 +79,9 @@ namespace Nucleo
                 _rb.linearVelocity = Vector2.zero;
                 _phase = BossPhase.Telegraphing;
                 _phaseTimer = 0f;
+                
+                // Animação de "carregando ataque": o boss treme levemente enquanto telegrafa
+                transform.DOShakePosition(telegraphDuration, 0.1f);
                 OnTelegraphStart?.Invoke();
             }
             else
@@ -120,6 +115,13 @@ namespace Nucleo
             _phase = BossPhase.Overflowing;
             _phaseTimer = 0f;
             OnOverflowFire?.Invoke();
+
+            // IMPACTO VISUAL: Treme a câmera do jogo ao disparar o ataque
+            if (Camera.main != null)
+                Camera.main.transform.DOShakePosition(0.3f, 0.6f);
+
+            // Animação do Boss "pulsando" na hora da explosão
+            transform.DOPunchScale(Vector3.one * 0.3f, 0.2f);
 
             if (PlayerTarget != null && Vector2.Distance(_rb.position, PlayerTarget.position) <= overflowRadius)
                 PlayerTarget.GetComponent<Health>()?.TakeDamage(overflowDamage, gameObject);
