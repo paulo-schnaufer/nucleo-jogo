@@ -1,19 +1,11 @@
-// NÚCLEO: Última Onda — Core Prototype Architecture (ver STATUS.md)
 using UnityEngine;
 using System.Collections.Generic;
+using Nucleo.Core;
+using Nucleo.GameFeel;
+using Nucleo.Enemies;
 
 namespace Nucleo
 {
-    /// <summary>
-    /// Estado geral da partida: liga fim de jogo (morte do jogador OU
-    /// Integridade do Núcleo zerada) e vitória (onda 6/boss derrotado).
-    ///
-    /// DECISÃO DE DESIGN PENDENTE DE CONFIRMAÇÃO: este script assume que
-    /// Núcleo a zero = Game Over, igual à morte do jogador. SCOPE_LOCK.md só
-    /// confirma que a Integridade afeta o TEXTO do fechamento ("fechamento
-    /// com variante conforme integridade restante"), não confirma que ela é
-    /// uma condição de derrota separada. Ver aviso na resposta desta sessão.
-    /// </summary>
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
@@ -156,7 +148,7 @@ namespace Nucleo
 
         private void EndGame(GameState state)
         {
-            if (CurrentState != GameState.Playing) return; // evita disparar 2x
+            if (CurrentState != GameState.Playing) return; 
             CurrentState = state;
             HitStop.NotifyExternalPause();
             Time.timeScale = 0f;

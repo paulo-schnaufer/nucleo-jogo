@@ -1,14 +1,7 @@
-// NÚCLEO: Última Onda — Core Prototype Architecture (ver STATUS.md)
 using UnityEngine;
 
-namespace Nucleo
+namespace Nucleo.Player
 {
-    /// <summary>
-    /// Stats do jogador que podem ser modificados por upgrades passivos
-    /// (velocidade, dano, regeneração, raio de coleta — SCOPE_LOCK.md).
-    /// Centraliza os bônus pra qualquer sistema (movimento, armas, XPOrb)
-    /// ler o valor final em vez de duplicar lógica de upgrade em cada script.
-    /// </summary>
     [RequireComponent(typeof(Health))]
     public class PlayerStats : MonoBehaviour
     {
@@ -42,7 +35,6 @@ namespace Nucleo
                 _health.Heal(RegenPerSecond * Time.deltaTime);
         }
 
-        // Chamados pelo UpgradeManager ao aplicar um upgrade passivo escolhido.
         public void AddMoveSpeed(float amount) { _moveSpeedBonus += amount; RecalculateStats(); }
         public void AddDamageMultiplier(float amount) { _damageBonus += amount; RecalculateStats(); }
         public void AddRegen(float amount) { _regenBonus += amount; RecalculateStats(); }
@@ -54,6 +46,7 @@ namespace Nucleo
             DamageMultiplier = baseDamageMultiplier + _damageBonus;
             RegenPerSecond = baseRegenPerSecond + _regenBonus;
             PickupRadius = basePickupRadius + _pickupRadiusBonus;
+            Debug.Log($"[Stats] MoveSpeed={MoveSpeed:F2} DamageMultiplier={DamageMultiplier:F2} Regen={RegenPerSecond:F2} PickupRadius={PickupRadius:F2}");
         }
     }
 }

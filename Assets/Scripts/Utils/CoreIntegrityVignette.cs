@@ -1,21 +1,9 @@
-// NÚCLEO: Última Onda — UI
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Nucleo.UI
 {
-    /// <summary>
-    /// Vinheta vermelha full-screen cujo alpha sobe conforme a Integridade do
-    /// Núcleo cai — urgência visual sem gastar partícula nenhuma.
-    ///
-    /// Setup no Unity:
-    /// 1. Cria uma Image full-screen (anchors esticados nos 4 cantos), numa
-    ///    camada acima do HUD mas abaixo dos painéis de fim de jogo.
-    /// 2. Desliga "Raycast Target" nela (senão ela bloqueia clique em tudo).
-    /// 3. Arrasta essa Image no campo "Vignette Image" e o CoreIntegrity da
-    ///    cena no campo "Core Integrity".
-    /// </summary>
     public class CoreIntegrityVignette : MonoBehaviour
     {
         [SerializeField] private CoreIntegrity coreIntegrity;
@@ -41,13 +29,6 @@ namespace Nucleo.UI
         private bool _isPulsing;
         private bool _suppressed;
 
-        /// <summary>
-        /// Força a vinheta a sumir e para de reagir à Integridade/HP enquanto
-        /// suppressed=true. Chamado pelo NarrativeUIController sempre que sai
-        /// de gameplay de verdade (créditos, telas de fim de jogo, iniciais,
-        /// abertura) — assim ela nunca compete visualmente com o fade preto
-        /// dessas telas, não importa a ordem na hierarquia.
-        /// </summary>
         public void SetSuppressed(bool suppressed)
         {
             _suppressed = suppressed;
@@ -68,9 +49,6 @@ namespace Nucleo.UI
         {
             if (_suppressed || vignetteImage == null) return;
 
-            // A vinheta reage a quem estiver PIOR dos dois — Núcleo ou jogador.
-            // Se uma das referências não estiver setada, ela conta como "100% saudável"
-            // (não participa do cálculo), em vez de travar a vinheta ligada pra sempre.
             float percent = Mathf.Min(GetPercent(coreIntegrity?.Health), GetPercent(playerHealth));
             bool shouldPulse = percent > 0f && percent <= criticalThreshold;
 

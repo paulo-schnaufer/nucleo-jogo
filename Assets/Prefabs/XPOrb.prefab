@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2849170585461242036}
   - component: {fileID: 1490231677197352662}
-  - component: {fileID: 7877370201798357616}
-  - component: {fileID: 348645460939270705}
+  - component: {fileID: 6719738000623120656}
+  - component: {fileID: 6685801260754205001}
   m_Layer: 0
   m_Name: XPOrb
   m_TagString: Untagged
@@ -94,7 +94,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
---- !u!114 &7877370201798357616
+--- !u!114 &6719738000623120656
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,10 +103,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1043177383665105633}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7748009633adc5409b56b16b633f48b, type: 3}
+  m_Script: {fileID: 11500000, guid: 00b5f97ae5d461a41947a2bf3103f809, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem
---- !u!114 &348645460939270705
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Core.PoolItem
+--- !u!114 &6685801260754205001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,8 +115,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1043177383665105633}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65bc9b50b26f49841966d0d7f4788249, type: 3}
+  m_Script: {fileID: 11500000, guid: ecf28b19ff64b7e47ac1ee176bdeacca, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.XPOrb
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Pickups.XPOrb
   attractSpeed: 8
   collectDistance: 0.2

@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using Unity.Cinemachine; // Importação correta para o Cinemachine novo
+using Unity.Cinemachine; 
 
 namespace Nucleo
 {
@@ -10,7 +10,7 @@ namespace Nucleo
 
         [Header("Configuração")]
         [Tooltip("Arraste a sua Cinemachine Camera aqui")]
-        [SerializeField] private CinemachineCamera vcam; // Componente atualizado
+        [SerializeField] private CinemachineCamera vcam; 
         
         private float _defaultSize;
         private Coroutine _zoomRoutine;
@@ -26,7 +26,6 @@ namespace Nucleo
 
             if (vcam != null)
             {
-                // No Cinemachine 3, usamos Lens em vez de m_Lens
                 _defaultSize = vcam.Lens.OrthographicSize; 
             }
         }

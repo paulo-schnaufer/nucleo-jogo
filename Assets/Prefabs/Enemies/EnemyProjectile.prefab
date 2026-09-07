@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9005332785059921847}
-  - component: {fileID: 1490028396144575991}
   - component: {fileID: 4561478277848539466}
   - component: {fileID: 5407830895771556476}
   - component: {fileID: -6767003749197488262}
   - component: {fileID: 7084656327013031612}
+  - component: {fileID: 2783046480708116768}
   m_Layer: 8
   m_Name: EnemyProjectile
   m_TagString: Untagged
@@ -36,18 +36,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
---- !u!114 &1490028396144575991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6425653836862767806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7748009633adc5409b56b16b633f48b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem
 --- !u!114 &4561478277848539466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,3 +174,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2783046480708116768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6425653836862767806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b5f97ae5d461a41947a2bf3103f809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem

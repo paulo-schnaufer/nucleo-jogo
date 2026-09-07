@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88203341b113f9e40addb74ceffeef37, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b323b05217f8844cba0a12c0a78e0c7, type: 3}
   m_Name: Upgrade_RaioColeta
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
   displayName: Cache
-  description: "Expande o algoritmo de varredura de mem\xF3ria, for\xE7ando a intercepta\xE7\xE3o de dados \xF3rf\xE3os \xE0 dist\xE2ncia."
-  icon: {fileID: -6311638614420288722, guid: 7621d84bb1ed64e41a8c265bf3c46026, type: 3}
+  description: "Expande o algoritmo de varredura de mem\xF3ria, for\xE7ando a intercepta\xE7\xE3o de dados orf\xE3os \xE0 dist\xE2ncia."
+  icon: {fileID: -3561148701943319872, guid: 031c85576b20e394198b36d1bbcf82e1, type: 3}
   category: 1
   weaponPrefab: {fileID: 0}
   passiveType: 3
-  passiveAmountPerPick: 0.3
+  passiveAmountPerPick: 0.5
   oneTimeOnly: 0

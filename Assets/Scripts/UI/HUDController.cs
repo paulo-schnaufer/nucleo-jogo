@@ -1,17 +1,11 @@
-// NÚCLEO: Última Onda — UI (ver STATUS.md, bloco P1 "UI mínima")
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using Nucleo.Player;
 
 namespace Nucleo.UI
 {
-    /// <summary>
-    /// HUD sempre visível: vida do jogador, Integridade do Núcleo, XP/nível
-    /// e onda atual. Só consome eventos já públicos de Health/CoreIntegrity/
-    /// PlayerProgression/EnemySpawner — nenhum script de gameplay foi
-    /// alterado pra isso (ver DECISIONS.md sobre arquitetura oficial).
-    /// </summary>
     public class HUDController : MonoBehaviour
     {
         [Header("Fontes de dados (arrastar no Inspector)")]
@@ -36,7 +30,6 @@ namespace Nucleo.UI
         [Header("UI — onda (opcional)")]
         [SerializeField] private TMP_Text waveLabel;
 
-        // Variáveis para guardar as cores originais configuradas no Unity
         private Color originalPlayerColor;
         private Color originalCoreColor;
         private float lastPlayerHP = -1f;
@@ -68,12 +61,9 @@ namespace Nucleo.UI
 
         private void Start()
         {
-            // Salva as cores exatas que você colocou lá no Unity Editor
             if (playerHealthFill != null) originalPlayerColor = playerHealthFill.color;
             if (coreHealthFill != null) originalCoreColor = coreHealthFill.color;
 
-            // Estado inicial — os eventos acima só disparam em MUDANÇA, então
-            // sem isso a barra ficaria vazia até o primeiro dano/XP.
             if (playerHealth != null) HandlePlayerHealthChanged(playerHealth.CurrentHP, playerHealth.MaxHP);
             if (coreIntegrity != null) 
             {
@@ -89,9 +79,8 @@ namespace Nucleo.UI
 
         private void HandlePlayerHealthChanged(float current, float max)
         {
-            // Descobre se perdeu vida (Dano) ou ganhou vida (Regen)
             bool isDamage = lastPlayerHP > 0 && current < lastPlayerHP;
-            lastPlayerHP = current; // Atualiza a memória pro próximo hit
+            lastPlayerHP = current;
 
             if (playerHealthFill != null) 
             {
@@ -100,7 +89,6 @@ namespace Nucleo.UI
                 playerHealthFill.DOKill();
                 playerHealthFill.color = originalPlayerColor; 
                 
-                // Só pisca a barra de branco se tomou dano
                 if (isDamage) 
                 {
                     Sequence dmgSeq = DOTween.Sequence();
@@ -118,7 +106,6 @@ namespace Nucleo.UI
                 playerHealthLabel.DOKill(); 
                 playerHealthLabel.transform.DOKill();
                 
-                // Só treme e fica vermelho se tomou dano!
                 if (isDamage)
                 {
                     playerHealthLabel.transform.localScale = Vector3.one; 
@@ -132,7 +119,6 @@ namespace Nucleo.UI
                 }
                 else
                 {
-                    // Se for regen, apenas garante que o texto fique normal e branco
                     playerHealthLabel.transform.localScale = Vector3.one;
                     playerHealthLabel.color = Color.white;
                 }
@@ -186,7 +172,6 @@ namespace Nucleo.UI
             {
                 float targetFill = toNext > 0 ? (float)current / toNext : 0f;
                 
-                // Se a barra zerou (level up), não anima, apenas reseta
                 if (targetFill == 0) xpFill.fillAmount = 0f;
                 else xpFill.DOFillAmount(targetFill, 0.4f).SetEase(Ease.OutBack);
             }

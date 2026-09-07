@@ -9,14 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3547410428914116707}
-  - component: {fileID: 1187161246781890601}
   - component: {fileID: 6025866207564703044}
-  - component: {fileID: 8137621246428454772}
   - component: {fileID: 5518021025307928752}
   - component: {fileID: -7888911340579940082}
   - component: {fileID: 7759097946703792730}
   - component: {fileID: 4651803273478445205}
   - component: {fileID: 3953683248041558569}
+  - component: {fileID: 3628715089957522956}
+  - component: {fileID: 6099979776439113595}
   m_Layer: 8
   m_Name: TanqueEnemy
   m_TagString: Enemy
@@ -39,19 +39,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1187161246781890601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8305347642106073466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4855d39cc6d32104ca0249e4b50808b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
-  maxHP: 80
 --- !u!50 &6025866207564703044
 Rigidbody2D:
   serializedVersion: 5
@@ -79,18 +66,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8137621246428454772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8305347642106073466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7748009633adc5409b56b16b633f48b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem
 --- !u!114 &5518021025307928752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,8 +84,8 @@ MonoBehaviour:
   knockbackForce: 9
   xpOrbPrefab: {fileID: 1043177383665105633, guid: 5030e37e6453c3645adf6ac6887c00ac, type: 3}
   xpValue: 3
-  leakGrowthPerSecond: 0.5
-  contactDamageCap: 20
+  leakGrowthPerSecond: 2
+  contactDamageCap: 16
 --- !u!212 &-7888911340579940082
 SpriteRenderer:
   serializedVersion: 3
@@ -277,3 +252,30 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.8666667, y: 1.2}
   m_EdgeRadius: 0
+--- !u!114 &3628715089957522956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8305347642106073466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f8c396b965e08c4f89a9197a9795210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
+  maxHP: 80
+  useIFrames: 0
+  iFrameDuration: 0.4
+--- !u!114 &6099979776439113595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8305347642106073466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b5f97ae5d461a41947a2bf3103f809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem

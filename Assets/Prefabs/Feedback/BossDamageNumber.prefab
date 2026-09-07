@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 2217411864523133850}
   - component: {fileID: 5966847114037034086}
   - component: {fileID: 1543314080195300686}
-  - component: {fileID: 574110594750457055}
-  - component: {fileID: 1104643850012248867}
-  - component: {fileID: 2429099636827383946}
+  - component: {fileID: 4947739934959896397}
+  - component: {fileID: 5320001803845962737}
   m_Layer: 0
   m_Name: BossDamageNumber
   m_TagString: Untagged
@@ -107,7 +106,7 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294637557
---- !u!114 &574110594750457055
+--- !u!114 &4947739934959896397
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,10 +115,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4262683260278746596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7748009633adc5409b56b16b633f48b, type: 3}
+  m_Script: {fileID: 11500000, guid: 00b5f97ae5d461a41947a2bf3103f809, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem
---- !u!114 &1104643850012248867
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Core.PoolItem
+--- !u!114 &5320001803845962737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,21 +127,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4262683260278746596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2ceb88b01107d74189708243f62d1fa, type: 3}
+  m_Script: {fileID: 11500000, guid: f732d7bae72429144bf0a6c2e3fb98c8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PooledDamageNumber
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.GameFeel.PooledDamageNumber
   lifetime: 0.6
   riseDistance: 0.7
   textMesh: {fileID: 1543314080195300686}
---- !u!114 &2429099636827383946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4262683260278746596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7748009633adc5409b56b16b633f48b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem

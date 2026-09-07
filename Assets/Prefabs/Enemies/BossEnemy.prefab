@@ -9,14 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1819467743192731427}
-  - component: {fileID: 8485908459677012745}
   - component: {fileID: 4520700985509294267}
-  - component: {fileID: 7790582021307968515}
   - component: {fileID: 3275123159498813908}
   - component: {fileID: -566722749257083141}
   - component: {fileID: 2326615010156443990}
   - component: {fileID: 2948602491397312381}
   - component: {fileID: 5690715880630701526}
+  - component: {fileID: 7693162021141752206}
+  - component: {fileID: 4861718291546473297}
+  - component: {fileID: 7550613779422471763}
   m_Layer: 8
   m_Name: BossEnemy
   m_TagString: Enemy
@@ -39,19 +40,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8485908459677012745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055057248697513125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4855d39cc6d32104ca0249e4b50808b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
-  maxHP: 600
 --- !u!50 &4520700985509294267
 Rigidbody2D:
   serializedVersion: 5
@@ -79,18 +67,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7790582021307968515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055057248697513125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7748009633adc5409b56b16b633f48b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem
 --- !u!114 &3275123159498813908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,26 +79,111 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3312e48f26ba23b4b84293af16b1c1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.BossEnemy
-  moveSpeed: 3
-  contactDamage: 25
+  moveSpeed: 3.5
+  contactDamage: 20
   contactDamageInterval: 1
-  knockbackForce: 100
+  knockbackForce: 12
   xpOrbPrefab: {fileID: 1043177383665105633, guid: 5030e37e6453c3645adf6ac6887c00ac, type: 3}
-  xpValue: 50
+  xpValue: 15
   bossMusicClip: {fileID: 8300000, guid: e45f71499b3dde944baf8f2cc17cd97d, type: 3}
   attackRange: 2.8
-  telegraphDuration: 1.2
+  telegraphDuration: 0.6
   overflowWindow: 0.15
   overflowRadius: 3.8
-  overflowDamage: 25
-  cooldownDuration: 1.8
+  overflowDamage: 35
+  cooldownDuration: 0.6
   OnTelegraphStart:
     m_PersistentCalls:
       m_Calls: []
   OnOverflowFire:
     m_PersistentCalls:
-      m_Calls: []
-  bossCamSize: 8.5
+      m_Calls:
+      - m_Target: {fileID: 7550613779422471763}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 73d99b40e1df794448eaaae5c1d6081e, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  lungeSpeed: 16
+  lungeDuration: 0.3
+  lungeInterval: 1.3
+  projectilePrefab: {fileID: 3147583085587624011, guid: 9185b4d36f1c9c94284d4376a0ee057f, type: 3}
+  projectileDamage: 10
+  barrageShotCount: 20
+  barrageShotInterval: 0.05
+  spiralAngleStep: 25
+  telegraphBarrageDuration: 0.45
+  maxTimeWithoutAttack: 1.6
+  OnBarrageTelegraphStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7550613779422471763}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: d6353ab3865a19e4faf669d5f5f57eac, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnBarrageShotFired:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7550613779422471763}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: e4e60aa818acfa54f92366b16eb2fba3, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  enrageHpThreshold: 0.3
+  enrageSpeedMultiplier: 1.15
+  enrageBarrageShotMultiplier: 1.4
+  enrageCooldownMultiplier: 0.7
+  OnEnrageStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7550613779422471763}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 0ce4265e8f086cc42ba939b87c3c03c2, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Nucleo.Enemies.BossPressureSpawner, Assembly-CSharp
+        m_MethodName: NotifyEnrage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  bossSprite: {fileID: -566722749257083141}
+  telegraphColor: {r: 1, g: 0.75, b: 0.1, a: 1}
+  bossCamSize: 15
   zoomDuration: 1.5
 --- !u!212 &-566722749257083141
 SpriteRenderer:
@@ -271,31 +332,158 @@ EdgeCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.05
   m_Points:
-  - {x: -3.2, y: 0.07171631}
-  - {x: -2.973808, y: 1.1609825}
-  - {x: -1.1529474, y: 1.3624921}
-  - {x: -0.3640008, y: 2.312647}
-  - {x: 0.32007694, y: 2.286202}
-  - {x: 0.86838436, y: 1.3245735}
-  - {x: 2.653461, y: 1.3799062}
-  - {x: 3.1836433, y: 0.6385288}
-  - {x: 3.081098, y: -1.1890601}
-  - {x: 2.5542822, y: -1.6742529}
-  - {x: 1.0535479, y: -1.6531576}
-  - {x: 0.71447563, y: -2.1085854}
-  - {x: -0.69029, y: -2.2413456}
-  - {x: -0.8592267, y: -1.6646891}
-  - {x: -1.9983997, y: -1.7264433}
-  - {x: -3.1593454, y: -1.2862239}
-  - {x: -3.3022165, y: 0.018738747}
+  - {x: -3.9749722, y: 2.207917}
+  - {x: -2.1045837, y: 2.1482205}
+  - {x: -1.333857, y: 2.4915688}
+  - {x: -0.6798706, y: 3.917442}
+  - {x: 0.59677744, y: 3.9693792}
+  - {x: 1.5835795, y: 2.1193266}
+  - {x: 2.0548782, y: 2.1501782}
+  - {x: 4.235985, y: 2.081423}
+  - {x: 5.2068405, y: 1.2419169}
+  - {x: 5.1927505, y: -1.8758993}
+  - {x: 3.985273, y: -2.5102625}
+  - {x: 1.8662632, y: -2.520455}
+  - {x: 0.85616493, y: -3.5494137}
+  - {x: -0.9066305, y: -3.5438924}
+  - {x: -1.6758933, y: -2.5671053}
+  - {x: -3.746304, y: -2.497888}
+  - {x: -5.1735544, y: -1.8914905}
+  - {x: -5.252367, y: 1.1742811}
+  - {x: -4.0768766, y: 2.1976595}
+  - {x: -4.0552306, y: 2.2655022}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &7693162021141752206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055057248697513125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f8c396b965e08c4f89a9197a9795210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
+  maxHP: 1000
+  useIFrames: 0
+  iFrameDuration: 0.4
+--- !u!114 &4861718291546473297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055057248697513125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b5f97ae5d461a41947a2bf3103f809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem
+--- !u!82 &7550613779422471763
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055057248697513125}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -5470897559894592465, guid: 4dfac1ba0849e8349b63485facddd595, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

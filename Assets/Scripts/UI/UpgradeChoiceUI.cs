@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DG.Tweening; // Obrigatório para as animações
+using DG.Tweening;
+using Nucleo.Upgrades;
+using Nucleo.Controls;
 
 namespace Nucleo.UI
 {
@@ -11,11 +13,15 @@ namespace Nucleo.UI
         [SerializeField] private GameObject panelRoot;
         [SerializeField] private List<UpgradeCard> cards = new List<UpgradeCard>();
 
+        [Header("Joystick (mobile)")]
+        [Tooltip("Arraste aqui o GameObject 'Joystick_Background' (o que tem o script VirtualJoystick). Some enquanto a tela de upgrade está aberta.")]
+        [SerializeField] private VirtualJoystick virtualJoystick;
+
         [System.Serializable]
         public class UpgradeCard
         {
             [Tooltip("Arraste o objeto PAI do card aqui (o fundo que contém tudo)")]
-            public RectTransform cardRoot; // <- NOVA VARIÁVEL AQUI
+            public RectTransform cardRoot;
             
             public Button button;
             public Image icon;
@@ -38,10 +44,10 @@ namespace Nucleo.UI
 
         private void HandleChoicesReady(List<UpgradeData> choices)
         {
-            // 1. ATIVA O PAINEL PRIMEIRO para a Unity organizar a tela
             if (panelRoot != null) panelRoot.SetActive(true);
 
-            // 2. FORÇA O LAYOUT A ATUALIZAR (Garante que a Unity saiba a posição final exata das cartas)
+            if (virtualJoystick != null) virtualJoystick.SetVisible(false);
+
             Canvas.ForceUpdateCanvases();
 
             for (int i = 0; i < cards.Count; i++)
@@ -66,19 +72,15 @@ namespace Nucleo.UI
 
                 if (card.cardRoot != null)
                 {
-                    // 3. MATA qualquer animação presa de level-ups anteriores
                     card.cardRoot.DOKill();
-                    
-                    // ESCONDE a carta imediatamente para não "piscar" na tela durante o delay
                     card.cardRoot.localScale = Vector3.zero;
                     
-                    // Inicia a queda suave
                     card.cardRoot.DOAnchorPosY(800f, 0.6f)
                         .From(true) 
                         .SetEase(Ease.OutBack)
                         .SetDelay(i * 0.15f)
                         .SetUpdate(true)
-                        .OnStart(() => card.cardRoot.localScale = Vector3.one); // REVELA a carta só na hora de despencar
+                        .OnStart(() => card.cardRoot.localScale = Vector3.one);
                 }
             }
         }
@@ -86,6 +88,12 @@ namespace Nucleo.UI
         private void SelectAndClose(UpgradeData chosen)
         {
             if (panelRoot != null) panelRoot.SetActive(false);
+
+            bool stillPlaying = GameManager.Instance != null
+                && GameManager.Instance.CurrentState == GameManager.GameState.Playing;
+            if (virtualJoystick != null && stillPlaying)
+                virtualJoystick.SetVisible(true);
+
             UpgradeManager.Instance.ConfirmChoice(chosen);
         }
     }

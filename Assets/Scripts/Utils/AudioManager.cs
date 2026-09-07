@@ -1,20 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-/// <summary>
-/// Ponto único de reprodução de áudio do protótipo "NÚCLEO: Última Onda".
-/// Escopo desta sessão (ver Docs/SCOPE_LOCK.md / STATUS.md):
-///   - 1 som de "hit" reaproveitado entre os 4 tipos de inimigo, com
-///     variação aleatória de pitch por instância.
-///   - 1 única faixa de música ambiente/tensão, em loop.
-///   - Proteção contra estouro é feita em duas camadas complementares:
-///       (1) pool pequeno de AudioSources dedicadas ao hit (ver PlayHit),
-///       (2) Compressor no grupo Master do Audio Mixer, atuando como limiter.
-///
-/// NÃO estende o escopo (sem múltiplos hits, sem crossfade de música, sem
-/// camadas dinâmicas de tensão) — qualquer ideia nesse sentido vai para a
-/// seção Backlog de SCOPE_LOCK.md, não para este script.
-/// </summary>
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
@@ -27,12 +13,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip hitClip;
     [SerializeField] private Vector2 hitPitchRange = new Vector2(0.85f, 1.15f);
     [SerializeField, Range(0f, 1f)] private float hitVolume = 0.9f;
-    [Tooltip("Cada instância concorrente de hit precisa da própria AudioSource: " +
-             "AudioSource.pitch afeta TODAS as reproduções em andamento naquela " +
-             "fonte (inclusive via PlayOneShot), então um pool pequeno evita que " +
-             "um hit novo 'puxe' o pitch de um hit anterior que ainda está tocando. " +
-             "8 cobre bem rajadas de morte simultânea (ex.: lâminas orbitais / " +
-             "tiro em leque acertando vários inimigos no mesmo frame).")]
+    [Tooltip("Cada instância concorrente de hit precisa da própria AudioSource: AudioSource.pitch afeta TODAS as reproduções em andamento naquela fonte (inclusive via PlayOneShot), então um pool pequeno evita que um hit novo 'puxe' o pitch de um hit anterior que ainda está tocando. 8 cobre bem rajadas de morte simultânea (ex.: lâminas orbitais / tiro em leque acertando vários inimigos no mesmo frame).")]
     [SerializeField] private int hitVoicePoolSize = 8;
 
     [Header("Música (faixa única ambiente/tensão)")]
@@ -45,16 +26,13 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton simples, mesmo padrão de EnemyBase.PlayerTarget/CoreTarget
-        // (DECISIONS.md) em vez de service locator.
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); // barato e evita recriar o pool se a cena
-                                        // única for recarregada num "restart".
+        DontDestroyOnLoad(gameObject); 
 
         BuildHitPool();
         BuildMusicSource();
@@ -92,16 +70,6 @@ public class AudioManager : MonoBehaviour
         _musicSource.volume = musicVolume;
     }
 
-    /// <summary>
-    /// Chamar a partir do ponto único onde os 4 tipos de EnemyBase resolvem
-    /// dano/morte (nome exato do método a confirmar na sessão dona dos
-    /// scripts de inimigo — ver "Próxima tarefa" no status desta sessão).
-    ///
-    /// Usa Play() e não PlayOneShot() de propósito: cada fonte do pool corta
-    /// a própria reprodução anterior de forma limpa ao dar Play() de novo,
-    /// em vez de sobrepor camadas com pitch divergente na mesma fonte (que é
-    /// o que aconteceria com PlayOneShot + pitch mutável).
-    /// </summary>
     public void PlayHit()
     {
         if (hitClip == null || _hitPool == null || _hitPool.Length == 0) return;
@@ -113,13 +81,10 @@ public class AudioManager : MonoBehaviour
         src.Play();
     }
 
-    /// <summary>
-    /// Troca a música atual por uma nova de forma imediata (hard cut).
-    /// </summary>
     public void ChangeMusic(AudioClip newMusic)
     {
         if (_musicSource == null || newMusic == null) return;
-        if (_musicSource.clip == newMusic) return; // Evita reiniciar se já for a mesma música
+        if (_musicSource.clip == newMusic) return; 
 
         _musicSource.Stop();
         _musicSource.clip = newMusic;

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3255523225720290517}
-  - component: {fileID: 7846885941860399967}
+  - component: {fileID: 2173097180565098603}
   m_Layer: 0
   m_Name: FanShotWeapon
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7846885941860399967
+--- !u!114 &2173097180565098603
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,16 +41,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2862889451173527468}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61fe753f04d7d8a439b5ffdedfe01bea, type: 3}
+  m_Script: {fileID: 11500000, guid: fdede3f5b10509841b067ff891f828c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.FanShotWeapon
   fireRate: 1
-  range: 4
+  range: 7.5
   baseDamage: 6
   projectileSpeed: 10
   projectilePrefab: {fileID: 3147583085587624011, guid: b62ca062a6a896342a171dabaeb658a0, type: 3}
   projectileCount: 5
-  spreadAngleDegrees: 70
+  spreadAngleDegrees: 45
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256

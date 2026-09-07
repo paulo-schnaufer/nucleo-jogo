@@ -1,4 +1,3 @@
-// NÚCLEO: Última Onda — UI
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,15 +5,6 @@ using UnityEngine.UI;
 
 namespace Nucleo.UI
 {
-    /// <summary>
-    /// Micro-interação genérica pra qualquer botão de UI: cresce levemente no hover
-    /// e dá um "punch" de escala no clique — mesmo princípio já usado no
-    /// RefreshInitialsSlots do NarrativeUIController. Só adicionar esse componente
-    /// no mesmo GameObject do Button, sem precisar mexer em código nenhum.
-    /// Se o botão tiver um Selectable (Button, Toggle, etc.) e estiver
-    /// interactable = false, o hover é ignorado — não faz sentido "convidar" o
-    /// jogador a clicar num botão desativado.
-    /// </summary>
     [RequireComponent(typeof(RectTransform))]
     public class ButtonJuice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
@@ -40,8 +30,6 @@ namespace Nucleo.UI
 
         private void OnDisable()
         {
-            // Evita que o botão fique "preso" numa escala esticada se o painel
-            // dele for fechado no meio de uma animação de hover/punch.
             _hoverTween?.Kill();
             transform.localScale = _baseScale;
         }

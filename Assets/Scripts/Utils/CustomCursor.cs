@@ -1,13 +1,7 @@
-// NÚCLEO: Última Onda — UI
 using UnityEngine;
 
 namespace Nucleo.UI
 {
-    /// <summary>
-    /// Troca o cursor do sistema operacional por uma textura customizada.
-    /// Coloca esse componente em qualquer GameObject persistente na cena
-    /// (o próprio Canvas serve) e arrasta a textura no Inspector.
-    /// </summary>
     public class CustomCursor : MonoBehaviour
     {
         [Tooltip("Textura do cursor. Import Settings: Texture Type = Cursor (ou Sprite/2D com Read/Write ativado).")]
@@ -32,7 +26,6 @@ namespace Nucleo.UI
 
         private void OnDestroy()
         {
-            // Volta pro cursor padrão do SO ao sair da cena/fechar o jogo.
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
     }

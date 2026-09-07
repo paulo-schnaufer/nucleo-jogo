@@ -1,4 +1,3 @@
-// NÚCLEO: Última Onda — UI
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,6 +5,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System.Collections.Generic;
+using Nucleo.Controls;
+using Nucleo.Player;
 
 namespace Nucleo.UI
 {
@@ -83,6 +84,10 @@ namespace Nucleo.UI
         [Tooltip("Vinheta de perigo (Núcleo/HP do jogador) — suprimida automaticamente fora de gameplay, junto com o hudPanel.")]
         [SerializeField] private CoreIntegrityVignette coreIntegrityVignette;
 
+        [Header("Joystick (mobile)")]
+        [Tooltip("Arraste aqui o GameObject 'Joystick_Background' (o que tem o script VirtualJoystick). Só aparece na luta: some no ranking, na abertura (opcional), na digitação de nome e em vitória/derrota.")]
+        [SerializeField] private VirtualJoystick virtualJoystick;
+
         [Header("Sincronização de Créditos")]
         [Tooltip("O AudioSource que está tocando a música do jogo")]
         [SerializeField] private AudioSource creditsMusic;
@@ -129,6 +134,8 @@ namespace Nucleo.UI
             if (initialsPanel != null) initialsPanel.SetActive(false);
             if (victoryPanel != null) victoryPanel.SetActive(false);
             if (defeatPanel != null) defeatPanel.SetActive(false);
+
+            if (virtualJoystick != null) virtualJoystick.SetVisible(false);
 
             if (confirmInitialsButton != null)
             {
@@ -200,14 +207,12 @@ namespace Nucleo.UI
             if (openingPanel != null) openingPanel.SetActive(false);
             if (hudPanel != null) hudPanel.SetActive(true);
             if (coreIntegrityVignette != null) coreIntegrityVignette.SetSuppressed(false);
+
+            if (virtualJoystick != null) virtualJoystick.SetVisible(true);
+
             Time.timeScale = 1f;
         }
 
-        /// <summary>
-        /// Fade + scale-in genérico pra dar acabamento "juicy" na abertura de qualquer painel.
-        /// celebratory=true (recorde/vitória) usa Ease.OutBack pra dar uma leve "pulsada"
-        /// de celebração; caso contrário é uma entrada mais discreta.
-        /// </summary>
         private void PlayPanelOpenAnimation(GameObject panel, bool celebratory = false)
         {
             if (panel == null) return;
@@ -225,12 +230,6 @@ namespace Nucleo.UI
              .SetUpdate(true);
         }
 
-        /// <summary>
-        /// Fade-out genérico pra fechar um painel de forma suave antes de outro abrir por
-        /// cima (ex: painel de derrota/vitória sumindo antes do painel de iniciais entrar).
-        /// Só desativa o GameObject (SetActive(false)) DEPOIS que o fade termina, e só então
-        /// chama onComplete — assim nunca ficamos com dois painéis cheios sobrepostos.
-        /// </summary>
         private void PlayPanelCloseAnimation(GameObject panel, float duration, TweenCallback onComplete = null)
         {
             if (panel == null || !panel.activeSelf)
@@ -256,6 +255,8 @@ namespace Nucleo.UI
             {
                 _finalScore = GetFinalScore();
                 if (coreIntegrityVignette != null) coreIntegrityVignette.SetSuppressed(true);
+
+                if (virtualJoystick != null) virtualJoystick.SetVisible(false);
             }
 
             if (state == GameManager.GameState.Victory)
@@ -320,21 +321,11 @@ namespace Nucleo.UI
             FinishRun();
         }
 
-        // ----- Pontuação / ranking / reset -----
-
         private void HandleWaveStartedForScore(int waveIndex)
         {
             _highestWave = waveIndex + 1;
         }
 
-        /// <summary>
-        /// Pontuação = wave*pontosPorWave + nível*pontosPorNivel + bônus de Núcleo + bônus de jogador.
-        /// A wave é o fator dominante de propósito: com os pesos padrão, mesmo o nível máximo
-        /// do jogo (~12) com Núcleo e HP a 100% (40*12 + 100 + 50 = 630) fica bem abaixo do valor
-        /// de UMA wave a mais (1000) — então quem chega numa wave mais alta sempre fica na frente
-        /// de quem farmou mais numa wave mais baixa. Dentro da mesma wave, nível e HP restante
-        /// desempatam o ranking.
-        /// </summary>
         private int GetFinalScore()
         {
             int wave = _highestWave;
@@ -379,11 +370,6 @@ namespace Nucleo.UI
         {
             if (leaderboardRowsParent != null)
             {
-                // Destroy() só remove o objeto de fato no fim do frame — se a gente
-                // não desanexar antes, as linhas antigas continuam contando pro
-                // Vertical Layout Group durante o Instantiate/ForceRebuildLayoutImmediate
-                // logo abaixo, o que bagunça as posições sempre que a quantidade de
-                // entradas do ranking muda de uma partida pra outra.
                 for (int i = leaderboardRowsParent.childCount - 1; i >= 0; i--)
                 {
                     Transform oldRow = leaderboardRowsParent.GetChild(i);
@@ -415,9 +401,6 @@ namespace Nucleo.UI
                 spawnedRows.Add((row, i, isRecentlySaved));
             }
 
-            // Só agora o Vertical Layout Group calcula a posição final de cada linha —
-            // sem isso, todas ficam com anchoredPosition "cru" e a animação as leva
-            // de volta pro mesmo ponto (o bug que apareceu no print).
             LayoutRebuilder.ForceRebuildLayoutImmediate(leaderboardRowsParent as RectTransform);
 
             foreach (var (row, index, isRecentlySaved) in spawnedRows)
@@ -427,6 +410,8 @@ namespace Nucleo.UI
         private void ShowInitialsPanel(int finalScore)
         {
             _pendingScore = finalScore;
+
+            if (virtualJoystick != null) virtualJoystick.SetVisible(false);
 
             if (finalScoreLabel != null) finalScoreLabel.text = $"NOVO RECORDE: {finalScore}";
 
@@ -459,7 +444,7 @@ namespace Nucleo.UI
             if (upper != value)
             {
                 int caret = initialsInput.caretPosition;
-                initialsInput.text = upper; // dispara este método de novo, já com o valor corrigido
+                initialsInput.text = upper; 
                 initialsInput.caretPosition = caret;
                 return;
             }
@@ -470,11 +455,6 @@ namespace Nucleo.UI
                 confirmInitialsButton.interactable = upper.Length >= initialsInput.characterLimit;
         }
 
-        /// <summary>
-        /// Sincroniza as 4 caixinhas visuais com o texto digitado: preenche a letra de cada
-        /// slot, dá um punch scale só na letra que acabou de ser digitada agora, e destaca
-        /// com corSlotAtivo o próximo slot a receber input.
-        /// </summary>
         private void RefreshInitialsSlots(string typed)
         {
             if (initialsSlotLabels == null) return;
@@ -515,8 +495,6 @@ namespace Nucleo.UI
             Scene current = SceneManager.GetActiveScene();
             SceneManager.LoadScene(current.buildIndex);
         }
-
-        // ----- Créditos (sem alterações na lógica original) -----
 
         private void RollCredits(TMP_Text mainText, TMP_Text thanksLabel, Image blackScreenFade)
         {

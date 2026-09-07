@@ -9,14 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8884941217627751536}
-  - component: {fileID: 202039008407538170}
   - component: {fileID: 5227323223127731683}
-  - component: {fileID: 5532590877820292844}
   - component: {fileID: 4172418160733460575}
   - component: {fileID: 7813943234170975403}
   - component: {fileID: 1216924931729766797}
   - component: {fileID: 7332095443776624899}
   - component: {fileID: -6338052818103392786}
+  - component: {fileID: 5510733898984112898}
+  - component: {fileID: 7182388626074075308}
   m_Layer: 8
   m_Name: AtiradorEnemy
   m_TagString: Enemy
@@ -39,19 +39,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &202039008407538170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6551569762592427693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4855d39cc6d32104ca0249e4b50808b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
-  maxHP: 22
 --- !u!50 &5227323223127731683
 Rigidbody2D:
   serializedVersion: 5
@@ -79,18 +66,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5532590877820292844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6551569762592427693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7748009633adc5409b56b16b633f48b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem
 --- !u!114 &4172418160733460575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +89,7 @@ MonoBehaviour:
   burstCooldown: 3.5
   projectilesPerBurst: 3
   burstSpreadAngle: 33
-  projectileDamage: 5
+  projectileDamage: 4
   projectilePrefab: {fileID: 6425653836862767806, guid: fa86c2136d2fb734cab6b6ab1b5dad0d, type: 3}
 --- !u!212 &7813943234170975403
 SpriteRenderer:
@@ -282,3 +257,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.4666667, y: 1.2666667}
   m_EdgeRadius: 0
+--- !u!114 &5510733898984112898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6551569762592427693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f8c396b965e08c4f89a9197a9795210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.Health
+  maxHP: 22
+--- !u!114 &7182388626074075308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6551569762592427693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b5f97ae5d461a41947a2bf3103f809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Nucleo.PoolItem

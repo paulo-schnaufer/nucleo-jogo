@@ -1,15 +1,8 @@
-// NÚCLEO: Última Onda — Core Prototype Architecture (ver STATUS.md)
 using UnityEngine;
+using Nucleo.Enemies;
 
 namespace Nucleo
 {
-    /// <summary>
-    /// Marca o GameObject do Núcleo (Integridade) e expõe o evento de
-    /// "integridade crítica" (ver STYLE_GUIDE.md seção 5 — telegraph
-    /// ÂMBAR-ALERTA) sem duplicar lógica de HP, que continua no componente
-    /// Health. Também registra este Transform como alvo dos inimigos
-    /// (EnemyBase.CoreTarget).
-    /// </summary>
     [RequireComponent(typeof(Health))]
     public class CoreIntegrity : MonoBehaviour
     {
@@ -20,7 +13,6 @@ namespace Nucleo
         public Health Health { get; private set; }
         public bool IsCritical { get; private set; }
 
-        /// <summary>Dispara ao cruzar o limiar crítico pra baixo (pra VFX/áudio/telegraph).</summary>
         public event System.Action OnCriticalEntered;
 
         private void Awake()
@@ -28,8 +20,6 @@ namespace Nucleo
             Health = GetComponent<Health>();
             Health.OnHealthChanged += HandleHealthChanged;
 
-            // Simplificação intencional pro protótipo (1 mapa, 1 Núcleo):
-            // referência estática direta em vez de service locator.
             EnemyBase.CoreTarget = transform;
         }
 
@@ -48,7 +38,7 @@ namespace Nucleo
             }
             else if (!nowCritical && IsCritical)
             {
-                IsCritical = false; // permite re-disparo se a Integridade regenerar acima do limiar
+                IsCritical = false; 
             }
         }
     }

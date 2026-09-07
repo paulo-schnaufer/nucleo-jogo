@@ -1,13 +1,7 @@
-// NÚCLEO: Última Onda — UI (ver STATUS.md, bloco P1 "UI mínima")
 using UnityEngine;
 
 namespace Nucleo.UI
 {
-    /// <summary>
-    /// Cores da paleta fixa do STYLE_GUIDE.md, centralizadas aqui pra nenhum
-    /// script de UI hardcodar hex solto (evita a paleta divergir por script).
-    /// Ver STYLE_GUIDE.md seção 1 pra origem/uso de cada cor.
-    /// </summary>
     public static class UITheme
     {
         public static readonly Color CianoBase = Hex("#00E5FF");

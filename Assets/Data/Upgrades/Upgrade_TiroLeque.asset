@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88203341b113f9e40addb74ceffeef37, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b323b05217f8844cba0a12c0a78e0c7, type: 3}
   m_Name: Upgrade_TiroLeque
   m_EditorClassIdentifier: Assembly-CSharp::Nucleo.UpgradeData
   displayName: Fork
@@ -18,5 +18,5 @@ MonoBehaviour:
   category: 0
   weaponPrefab: {fileID: 2862889451173527468, guid: 7d0d4b628a2746a4491a5b63e5697b5b, type: 3}
   passiveType: 0
-  passiveAmountPerPick: 1
+  passiveAmountPerPick: 0.5
   oneTimeOnly: 1
